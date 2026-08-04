@@ -1,0 +1,249 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Self-hosted fonts from CMM - Copy */
+@font-face {
+  font-family: "Playfair Display";
+  src: url("/fonts/PlayfairDisplay-Regular.ttf") format("truetype-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Cormorant Garamond";
+  src: url("/fonts/CormorantGaramond-Regular.ttf") format("truetype-variations");
+  font-weight: 100 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter-Variable.ttf") format("truetype-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #E1D9C6;
+  color: #3A1F28;
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+.font-serif {
+  font-family: "Playfair Display", Georgia, serif;
+}
+.font-accent {
+  font-family: "Cormorant Garamond", serif;
+}
+
+.hero-overlay {
+  background: linear-gradient(180deg, rgba(58, 31, 40, 0.10) 0%, rgba(58, 31, 40, 0.45) 100%);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.container-cmm {
+  @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center rounded-full bg-brand-pink px-6 py-3 text-sm font-medium tracking-wide text-white transition hover:bg-brand-pinkdark;
+}
+
+.btn-outline {
+  @apply inline-flex items-center justify-center rounded-full border border-brand-pink/40 px-6 py-3 text-sm font-medium tracking-wide text-brand-pink transition hover:border-brand-pink hover:bg-brand-pink hover:text-white;
+}
+
+.section-title {
+  @apply font-serif text-3xl sm:text-4xl text-brand-browndark;
+}
+
+.link-underline {
+  @apply relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-current after:transition-all hover:after:w-full;
+}
+
+/* Vertical video slot */
+.video-vertical {
+  aspect-ratio: 9 / 16;
+}
+
+/* ==================== Animations ==================== */
+
+/* Keyframes */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.9); opacity: 0.8; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+
+/* Hero text entrance */
+.hero-text > * {
+  opacity: 0;
+  animation: fadeUp 0.7s ease-out forwards;
+}
+.hero-text > *:nth-child(1) { animation-delay: 0.15s; }
+.hero-text > *:nth-child(2) { animation-delay: 0.30s; }
+.hero-text > *:nth-child(3) { animation-delay: 0.45s; }
+.hero-text > *:nth-child(4) { animation-delay: 0.60s; }
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+/* Product card hover lift */
+.product-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px -15px rgba(194, 67, 97, 0.25);
+}
+
+/* Cart drawer item entrance */
+.cart-item-enter {
+  animation: scaleIn 0.3s ease-out forwards;
+}
+
+/* Floating animation for play button */
+.float-anim {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Cart pop animation */
+@keyframes cartPop {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.35) rotate(-8deg); }
+  60% { transform: scale(0.95) rotate(4deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+.cart-pop {
+  animation: cartPop 0.5s ease-out;
+}
+
+/* Fly to cart */
+@keyframes flyToCart {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(calc(var(--fly-dx) * 0.5), calc(var(--fly-dy) * 0.5 - 80px)) scale(0.7);
+  }
+  100% {
+    opacity: 0.3;
+    transform: translate(var(--fly-dx), var(--fly-dy)) scale(0.2);
+  }
+}
+
+/* Badge bump */
+@keyframes badgeBump {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}
+.badge-bump {
+  animation: badgeBump 0.4s ease-out;
+}
+
+/* Floating cart button entrance */
+@keyframes floatIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.float-in {
+  animation: floatIn 0.4s ease-out forwards;
+}
+
+/* Shimmer skeleton */
+.shimmer {
+  background: linear-gradient(90deg, #f0e7db 25%, #f7f1e8 50%, #f0e7db 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Smooth image load */
+img {
+  transition: opacity 0.3s ease;
+}
+
+/* Button press effect */
+.btn-primary:active,
+.btn-outline:active {
+  transform: scale(0.96);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
