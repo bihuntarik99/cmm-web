@@ -40,3 +40,6 @@ public/images-original/
 # os
 Thumbs.db
 ehthumbs.db
+
+# Large PDFs
+public/images/catalogue/*.pdf
