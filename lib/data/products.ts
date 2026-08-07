@@ -35,7 +35,7 @@ export const categoryMeta: Record<
   "tea-blend": { label: "Tea Blend", href: "/produk/tea-blend", sub: "Ayurvana, Asmaranala" },
   tisane: { label: "Tisane", href: "/produk/tisane", sub: "Aparajita, Amondini, Arunika" },
   kopi: { label: "Kopi", href: "/produk/kopi", sub: "Arindama, Askala — Drip Bag" },
-  "cold-brew": { label: "Cold Brew", href: "/produk/cold-brew", sub: "CB Ayurvana, CB Amondini, CB Arunika, CB Asmaranala" },
+  "cold-brew": { label: "Cold Brew", href: "/produk/cold-brew", sub: "Cold Brew Ayurvana, Cold Brew Amondini, Cold Brew Arunika, Cold Brew Asmaranala" },
   "milk-tea": { label: "Milk Tea", href: "/produk/milk-tea", sub: "Lavender Milk Tea, Blue Matcha Milk Tea" },
 };
 
@@ -236,7 +236,7 @@ export const products: Product[] = [
   // ==================== COLD BREW ====================
   {
     slug: "cb-ayurvana",
-    name: "CB Ayurvana",
+    name: "Cold Brew Ayurvana",
     category: "cold-brew",
     blend: "ayurvana",
     short: "Teh dingin herbal botanical menyejukkan.",
@@ -253,7 +253,7 @@ export const products: Product[] = [
   },
   {
     slug: "cb-amondini",
-    name: "CB Amondini",
+    name: "Cold Brew Amondini",
     category: "cold-brew",
     blend: "amondini",
     short: "Minuman teh dingin Amondini segar & aromatik.",
@@ -270,7 +270,7 @@ export const products: Product[] = [
   },
   {
     slug: "cb-arunika",
-    name: "CB Arunika",
+    name: "Cold Brew Arunika",
     category: "cold-brew",
     blend: "arunika",
     short: "Cold brew serai, chamomile & kayu manis yang menenangkan.",
@@ -287,7 +287,7 @@ export const products: Product[] = [
   },
   {
     slug: "cb-asmaranala",
-    name: "CB Asmaranala",
+    name: "Cold Brew Asmaranala",
     category: "cold-brew",
     blend: "asmaranala",
     short: "Cold brew teh hitam mawar & beri segar manis.",

@@ -140,7 +140,7 @@ export default function Home() {
             </p>
           </div>
           <div className="flex flex-wrap gap-3 md:justify-end">
-            <a href={site.catalogueCompress} download className="rounded-full bg-white px-6 py-3 text-sm font-medium text-brand-pink hover:bg-brand-cream">
+            <a href={site.catalogueCompress} download className="rounded-full bg-brand-pinkdark px-6 py-3 text-sm font-medium text-white border border-white/40 hover:bg-white/10">
               {t("katalogCompress")}
             </a>
             <a href={site.catalogueHd} download className="rounded-full border border-white/60 px-6 py-3 text-sm font-medium text-white hover:bg-white hover:text-brand-pink">

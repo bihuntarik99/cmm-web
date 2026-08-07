@@ -55,7 +55,7 @@ export function ProductCard({ product }: { product: Product }) {
         <Link href={hrefFor(product, locale)}>
           <h3 className="font-serif text-xl text-brand-browndark">{product.name}</h3>
         </Link>
-        <p className="mt-1 text-sm text-brand-pink/70">{locale === "en" ? product.shortEn : product.short}</p>
+        <p className="mt-1 text-sm text-brand-browndark/70">{locale === "en" ? product.shortEn : product.short}</p>
         {product.price && (
           <p className="mt-2 text-sm font-medium text-brand-pink">{product.price}</p>
         )}

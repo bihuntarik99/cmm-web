@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Product, products, categoryMeta } from "@/lib/data/products";
 import { ProductCard } from "@/components/product/ProductCard";
+import { ScrollReveal } from "@/components/common/ScrollReveal";
 import { site } from "@/lib/site";
 import { useCart } from "@/lib/cart/CartContext";
 import { useFly } from "@/lib/cart/FlyContext";
@@ -53,6 +54,7 @@ export function ProductDetail({ product }: { product: Product }) {
 
       <div className="grid gap-10 lg:grid-cols-2">
         {/* Galeri */}
+        <ScrollReveal>
         <div className="grid gap-4">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -74,8 +76,10 @@ export function ProductDetail({ product }: { product: Product }) {
             </div>
           )}
         </div>
+        </ScrollReveal>
 
         {/* Info */}
+        <ScrollReveal delay={1}>
         <div>
           <p className="text-sm uppercase tracking-widest text-brand-pink">
             {categoryLabel(product)}
@@ -83,7 +87,7 @@ export function ProductDetail({ product }: { product: Product }) {
           <h1 className="mt-1 font-serif text-4xl text-brand-browndark">
             {product.name}
           </h1>
-          <p className="mt-3 text-brand-pink/80">{locale === "en" ? product.shortEn : product.short}</p>
+          <p className="mt-3 text-brand-browndark/80">{locale === "en" ? product.shortEn : product.short}</p>
 
           {product.price && (
             <p className="mt-3 text-2xl font-medium text-brand-pink">{product.price}</p>
@@ -190,10 +194,12 @@ export function ProductDetail({ product }: { product: Product }) {
             )}
           </div>
         </div>
+        </ScrollReveal>
       </div>
 
-      {/* t("komposisiProduk") (gambar KET) */}
+      {/* Komposisi Produk (gambar KET) */}
       {product.infoImage && (
+        <ScrollReveal>
         <section className="mt-14">
           <h2 className="section-title">{t("komposisiProduk")}</h2>
           <p className="mt-1 text-sm text-brand-pink/70">
@@ -208,9 +214,11 @@ export function ProductDetail({ product }: { product: Product }) {
             />
           </div>
         </section>
+        </ScrollReveal>
       )}
 
       {related.length > 0 && (
+        <ScrollReveal>
         <section className="mt-16">
           <h2 className="section-title">{t("produkTerkait")}</h2>
           <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -219,6 +227,7 @@ export function ProductDetail({ product }: { product: Product }) {
             ))}
           </div>
         </section>
+        </ScrollReveal>
       )}
     </div>
   );
