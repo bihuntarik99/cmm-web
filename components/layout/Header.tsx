@@ -33,7 +33,7 @@ export function Header() {
         <Link href={`/${locale}`} className="flex items-center gap-2">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/images/logo/logo-light.png"
+            src="/images/logo/logo-navbar.png"
             alt={site.name}
             className="h-10 w-auto rounded-full object-contain"
           />
