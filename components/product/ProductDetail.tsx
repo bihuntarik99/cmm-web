@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Product, products, categoryMeta, formatLabel } from "@/lib/data/products";
+import { Product, products, categoryMeta, formatLabel, type FormatKey } from "@/lib/data/products";
 import { ProductCard } from "@/components/product/ProductCard";
 import { priceForFormat } from "@/components/product/ProductCard";
 import { ScrollReveal } from "@/components/common/ScrollReveal";
@@ -30,11 +30,14 @@ export function ProductDetail({ product }: { product: Product }) {
   const locale = useLocale();
   const t = useTranslations("product");
   const formats = product.formats || [""];
-  const [selectedFormat, setSelectedFormat] = useState(formats[0]);
+  const [selectedFormat, setSelectedFormat] = useState<FormatKey | "">(formats[0] as FormatKey | "");
   const [qty, setQty] = useState(1);
+  const [activeImage, setActiveImage] = useState(0);
 
-  const currentPrice = priceForFormat(product, selectedFormat);
-  const infoImage = locale === "en" ? product.infoImageEn : product.infoImageId;
+  const isEn = locale === "en";
+  const currentPrice = selectedFormat ? priceForFormat(product, selectedFormat) : 0;
+  const infoImage = isEn ? product.infoImageEn : product.infoImageId;
+  const experience = isEn ? product.experienceEn : product.experience;
 
   const handleAdd = (e: React.MouseEvent<HTMLButtonElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -51,209 +54,258 @@ export function ProductDetail({ product }: { product: Product }) {
     .filter((p) => p.category === product.category && p.slug !== product.slug)
     .slice(0, 4);
 
+  const sectionLabel = "text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-browndark/50";
+  const sectionBody = "mt-1.5 text-sm leading-relaxed text-brand-browndark/85";
+
   return (
-    <div className="container-cmm py-12">
-      <nav className="mb-6 text-sm text-brand-pink/60">
+    <div className="container-cmm py-10 sm:py-12">
+      {/* Breadcrumb */}
+      <nav className="mb-8 text-xs text-brand-browndark/50 sm:text-sm">
         <Link href={categoryHref(product, locale)} className="hover:text-brand-pink">
           {categoryLabel(product, locale)}
         </Link>{" "}
-        / <span className="text-brand-browndark">{product.name}</span>
+        / <span className="font-medium text-brand-browndark">{product.name}</span>
       </nav>
 
-      <div className="grid gap-10 lg:grid-cols-2">
-        {/* Galeri */}
+      <div className="grid gap-10 lg:grid-cols-[1fr_1.15fr] lg:gap-14">
+        {/* ===== GALERI (KIRI) ===== */}
         <ScrollReveal>
-        <div className="grid gap-4">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={product.images[0]}
-            alt={product.name}
-            className="col-span-2 aspect-square w-full rounded-2xl object-contain bg-[#F4EEE2] p-4"
-          />
-          {product.images.length > 1 && (
-            <div className="grid grid-cols-3 gap-4">
-              {product.images.slice(1).map((img, i) => (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  key={i}
-                  src={img}
-                  alt={`${product.name} ${i + 2}`}
-                  className="aspect-square w-full rounded-xl object-contain bg-[#F4EEE2] p-2"
-                />
-              ))}
+          <div className="lg:sticky lg:top-24">
+            {/* Main image */}
+            <div className="relative aspect-square w-full overflow-hidden rounded-3xl bg-[#F7F2E9]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={product.images[activeImage]}
+                alt={product.name}
+                className="h-full w-full object-contain p-6 sm:p-10"
+              />
+              {/* Badge kategori */}
+              <span className="absolute left-4 top-4 rounded-full bg-brand-cream/90 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-brand-pink backdrop-blur">
+                {categoryLabel(product, locale)}
+              </span>
             </div>
-          )}
-        </div>
-        </ScrollReveal>
 
-        {/* Info — model keterangan produk */}
-        <ScrollReveal delay={1}>
-        <div>
-          <p className="text-sm uppercase tracking-widest text-brand-pink">
-            {categoryLabel(product, locale)}
-          </p>
-          <h1 className="mt-1 font-serif text-4xl text-brand-browndark">
-            {product.name}
-          </h1>
-          <p className="mt-3 text-brand-browndark/80">{locale === "en" ? product.shortEn : product.short}</p>
-
-          {/* Harga mengikuti format terpilih */}
-              {currentPrice > 0 && (
-            <div className="mt-3 flex items-baseline gap-3">
-              <p className="text-2xl font-medium text-brand-pink">{formatRupiah(currentPrice)}</p>
-              {product.formats && product.formats.length > 1 && selectedFormat && (
-                <span className="rounded-full bg-brand-pink/10 px-3 py-0.5 text-xs text-brand-pink">
-                  {formatLabel(selectedFormat, locale)}
-                </span>
-              )}
-            </div>
-          )}
-          {/* Rentang harga bila multi-format */}
-          {product.priceByFormat && product.formats && product.formats.length > 1 && (
-            <p className="mt-1 text-xs text-brand-browndark/50">
-              {product.formats.map((f) => `${formatLabel(f, locale)} ${formatRupiah(priceForFormat(product, f))}`).join(" · ")}
-            </p>
-          )}
-
-          {product.tastingNotes && (
-            <div className="mt-5">
-              <h3 className="text-xs uppercase tracking-widest text-brand-pink/60">
-                {t("catatanRasa")}
-              </h3>
-              <div className="mt-2 flex flex-wrap gap-2">
-                {(locale === "en" ? product.tastingNotesEn : product.tastingNotes)?.map((note) => (
-                  <span
-                    key={note}
-                    className="rounded-full bg-brand-pink/10 px-3 py-1 text-xs text-brand-pink"
-                  >
-                    {note}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Pilihan format — tombol menampilkan harga */}
-          {product.formats && product.formats.length > 0 && (
-            <div className="mt-5">
-              <h3 className="text-xs uppercase tracking-widest text-brand-pink/60">
-                {t("pilihFormat")}
-              </h3>
-              <div className="mt-2 flex flex-wrap gap-2">
-                {product.formats.map((f) => (
+            {/* Thumbnails */}
+            {product.images.length > 1 && (
+              <div className="mt-4 flex gap-3">
+                {product.images.map((img, i) => (
                   <button
-                    key={f}
-                    onClick={() => setSelectedFormat(f)}
-                    className={`rounded-full border px-4 py-2 text-sm transition ${
-                      selectedFormat === f
-                        ? "border-brand-pink bg-brand-pink text-white"
-                        : "border-brand-pink/30 text-brand-pink hover:border-brand-pink"
+                    key={i}
+                    onClick={() => setActiveImage(i)}
+                    aria-label={`Gambar ${i + 1}`}
+                    className={`aspect-square w-20 overflow-hidden rounded-xl bg-[#F7F2E9] transition ${
+                      activeImage === i
+                        ? "ring-2 ring-brand-pink ring-offset-2"
+                        : "opacity-60 hover:opacity-100"
                     }`}
                   >
-                    {formatLabel(f, locale)}
-                    {product.priceByFormat?.[f] != null && (
-                      <span className="ml-1 text-xs opacity-80">
-                        {formatRupiah(product.priceByFormat[f]!)}
-                      </span>
-                    )}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={img}
+                      alt={`${product.name} thumb ${i + 1}`}
+                      className="h-full w-full object-contain p-1.5"
+                      loading="lazy"
+                    />
                   </button>
                 ))}
               </div>
-            </div>
-          )}
-
-          {/* Qty selector */}
-          <div className="mt-5">
-            <h3 className="text-xs uppercase tracking-widest text-brand-pink/60">
-              {t("jumlah")}
-            </h3>
-            <div className="mt-2 flex items-center gap-3">
-              <button
-                onClick={() => setQty((q) => Math.max(1, q - 1))}
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-brand-pink/30 text-brand-pink hover:bg-brand-pink hover:text-white"
-              >
-                −
-              </button>
-              <span className="w-10 text-center font-medium">{qty}</span>
-              <button
-                onClick={() => setQty((q) => q + 1)}
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-brand-pink/30 text-brand-pink hover:bg-brand-pink hover:text-white"
-              >
-                +
-              </button>
-            </div>
+            )}
           </div>
+        </ScrollReveal>
 
-          {/* Action buttons */}
-          <div className="mt-7 flex flex-wrap gap-3">
-            <button
-              onClick={handleAdd}
-              className="btn-primary flex-1"
-            >
-              {t("tambahKeranjangDetail")}
-            </button>
-            <a
-              href={waLink(product, locale)}
-              target="_blank"
-              rel="noreferrer"
-              className="btn-outline"
-            >
-              {t("beliLangsung")}
-            </a>
-          </div>
+        {/* ===== INFO (KANAN) ===== */}
+        <ScrollReveal delay={1}>
+          <div>
+            {/* Label kategori */}
+            <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-brand-pink">
+              {categoryLabel(product, locale)}
+            </p>
 
-          <div className="mt-8 space-y-5 text-sm leading-relaxed text-brand-browndark/80">
-            <div>
-              <h3 className="font-serif text-lg text-brand-browndark">{t("tentang")}</h3>
-              <p className="mt-1">{locale === "en" ? product.descriptionEn : product.description}</p>
-            </div>
+            {/* Nama produk */}
+            <h1 className="mt-2 font-serif text-4xl font-bold uppercase tracking-wide text-brand-browndark sm:text-5xl">
+              {product.name}
+            </h1>
+
+            {/* Tagline — italic accent */}
+            <p className="mt-3 font-accent text-lg italic text-brand-pink">
+              {isEn ? product.shortEn : product.short}
+            </p>
+
+            {/* Deskripsi */}
+            <p className="mt-5 text-sm leading-relaxed text-brand-browndark/80 sm:text-base">
+              {isEn ? product.descriptionEn : product.description}
+            </p>
+
+            {/* Tasting Notes */}
+            {product.tastingNotes && (
+              <div className="mt-7">
+                <h3 className={sectionLabel}>{t("catatanRasa")}</h3>
+                <div className="mt-2.5 flex flex-wrap gap-2">
+                  {(isEn ? product.tastingNotesEn : product.tastingNotes)?.map((note) => (
+                    <span
+                      key={note}
+                      className="rounded-full border border-brand-pink/25 bg-brand-pink/5 px-3.5 py-1 text-xs font-medium text-brand-pink"
+                    >
+                      {note}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* The Experience */}
+            {experience && (
+              <div className="mt-7">
+                <h3 className={sectionLabel}>
+                  {isEn ? "The Experience" : "Pengalaman Secangkir Teh"}
+                </h3>
+                <p className={sectionBody}>{experience}</p>
+              </div>
+            )}
+
+            {/* Ingredients */}
             {product.ingredients && (
-              <div>
-                <h3 className="font-serif text-lg text-brand-browndark">{t("bahan")}</h3>
-                <p className="mt-1">{locale === "en" ? product.ingredientsEn : product.ingredients}</p>
+              <div className="mt-7">
+                <h3 className={sectionLabel}>{t("bahan")}</h3>
+                <p className={sectionBody}>{isEn ? product.ingredientsEn : product.ingredients}</p>
               </div>
             )}
+
+            {/* ===== VARIANT + HARGA ===== */}
+            {product.formats && product.formats.length > 0 && (
+              <div className="mt-8 rounded-2xl border border-brand-pink/15 bg-brand-creamlight/70 p-5 sm:p-6">
+                <h3 className={sectionLabel}>{t("pilihFormat")}</h3>
+                <div className="mt-3 space-y-2.5">
+                  {product.formats.map((f) => (
+                    <button
+                      key={f}
+                      onClick={() => setSelectedFormat(f)}
+                      className={`flex w-full items-center justify-between rounded-xl border px-4 py-3 text-left transition ${
+                        selectedFormat === f
+                          ? "border-brand-pink bg-white shadow-sm"
+                          : "border-brand-pink/20 bg-white/50 hover:border-brand-pink/50"
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <span
+                          className={`flex h-4 w-4 items-center justify-center rounded-full border-2 ${
+                            selectedFormat === f ? "border-brand-pink" : "border-brand-browndark/30"
+                          }`}
+                        >
+                          {selectedFormat === f && (
+                            <span className="h-2 w-2 rounded-full bg-brand-pink" />
+                          )}
+                        </span>
+                        <div>
+                          <span className="block text-sm font-semibold text-brand-browndark">
+                            {formatLabel(f, locale)}
+                          </span>
+                          {product.variantInfo?.[f] && (
+                            <span className="block text-xs text-brand-browndark/60">
+                              {product.variantInfo[f]}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      <span className="text-sm font-bold text-brand-pink">
+                        {formatRupiah(priceForFormat(product, f))}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* ===== QTY + CTA ===== */}
+            <div className="mt-7 flex flex-wrap items-center gap-4">
+              <div className="flex items-center rounded-full border border-brand-pink/30">
+                <button
+                  onClick={() => setQty((q) => Math.max(1, q - 1))}
+                  className="flex h-11 w-11 items-center justify-center text-brand-pink transition hover:bg-brand-pink/10"
+                  aria-label="Kurangi"
+                >
+                  −
+                </button>
+                <span className="w-10 text-center text-sm font-bold text-brand-browndark">{qty}</span>
+                <button
+                  onClick={() => setQty((q) => q + 1)}
+                  className="flex h-11 w-11 items-center justify-center text-brand-pink transition hover:bg-brand-pink/10"
+                  aria-label="Tambah"
+                >
+                  +
+                </button>
+              </div>
+
+              <button onClick={handleAdd} className="btn-primary h-11 flex-1 sm:flex-none sm:px-10">
+                {t("tambahKeranjangDetail")}
+              </button>
+              <a href={waLink(product, locale)} target="_blank" rel="noreferrer" className="btn-outline h-11">
+                {t("beliLangsung")}
+              </a>
+            </div>
+
+            {/* ===== BREWING GUIDE ===== */}
             {product.brewing && (
-              <div>
-                <h3 className="font-serif text-lg text-brand-browndark">{t("caraSeduh")}</h3>
-                <p className="mt-1">{locale === "en" ? product.brewingEn : product.brewing}</p>
+              <div className="mt-8 grid grid-cols-3 divide-x divide-brand-pink/15 rounded-2xl border border-brand-pink/15 bg-brand-creamlight/70">
+                {(() => {
+                  const brewStr = (isEn ? product.brewingEn : product.brewing) || "";
+                  const [temp, time, ratio] = brewStr
+                    .split("·")
+                    .map((s) => s.trim());
+                  const labels = isEn
+                    ? ["Water Temp", "Steep Time", "Ratio"]
+                    : ["Suhu Air", "Waktu Seduh", "Takaran"];
+                  const values = [temp, time, ratio];
+                  return labels.map((label, i) => (
+                    <div key={label} className="flex flex-col items-center gap-1 px-2 py-4 text-center">
+                      <span className="text-[10px] font-semibold uppercase tracking-widest text-brand-browndark/50">
+                        {label}
+                      </span>
+                      <span className="text-sm font-bold text-brand-browndark">{values[i]}</span>
+                    </div>
+                  ));
+                })()}
               </div>
             )}
           </div>
-        </div>
         </ScrollReveal>
       </div>
 
-      {/* Keterangan Produk (gambar KET per bahasa) */}
+      {/* ===== INFOGRAPHIC / KOMPOSISI (BAWAH) ===== */}
       {infoImage && (
         <ScrollReveal>
-        <section className="mt-14">
-          <h2 className="section-title">{t("komposisiProduk")}</h2>
-          <p className="mt-1 text-sm text-brand-pink/70">
-            {t("komposisiDesc")} {product.name}.
-          </p>
-          <div className="mt-6 overflow-hidden rounded-2xl border border-brand-pink/15 bg-brand-creamlight/80 p-4 sm:p-8">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={infoImage}
-              alt={`Komposisi ${product.name}`}
-              className="w-full object-contain"
-            />
-          </div>
-        </section>
+          <section className="mt-16">
+            <div className="mb-6 flex items-end justify-between">
+              <div>
+                <h2 className="section-title">{t("komposisiProduk")}</h2>
+                <p className="mt-1 text-sm text-brand-browndark/60">
+                  {t("komposisiDesc")} {product.name}.
+                </p>
+              </div>
+            </div>
+            <div className="overflow-hidden rounded-3xl border border-brand-pink/15 bg-brand-creamlight/80 p-4 sm:p-8">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={infoImage}
+                alt={`Komposisi ${product.name}`}
+                className="w-full object-contain"
+              />
+            </div>
+          </section>
         </ScrollReveal>
       )}
 
+      {/* ===== PRODUK TERKAIT ===== */}
       {related.length > 0 && (
         <ScrollReveal>
-        <section className="mt-16">
-          <h2 className="section-title">{t("produkTerkait")}</h2>
-          <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {related.map((p) => (
-              <ProductCard key={p.slug} product={p} />
-            ))}
-          </div>
-        </section>
+          <section className="mt-16">
+            <h2 className="section-title">{t("produkTerkait")}</h2>
+            <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {related.map((p) => (
+                <ProductCard key={p.slug} product={p} />
+              ))}
+            </div>
+          </section>
         </ScrollReveal>
       )}
     </div>

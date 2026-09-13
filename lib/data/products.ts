@@ -14,12 +14,17 @@ export type Product = {
   shortEn: string;
   description: string;
   descriptionEn: string;
+  /** Paragraf "The Experience" / "Pengalaman Secangkir Teh" */
+  experience?: string;
+  experienceEn?: string;
   tastingNotes?: string[];
   tastingNotesEn?: string[];
   ingredients?: string;
   ingredientsEn?: string;
   brewing?: string;
   brewingEn?: string;
+  /** Info variant, mis. "1 kaleng isi 6 tea bags" */
+  variantInfo?: Partial<Record<"Kaleng" | "Sachet" | "Drip Bag", string>>;
   formats?: ("Kaleng" | "Sachet" | "Drip Bag")[];
   /** Harga per format — dipakai cart & product detail */
   priceByFormat?: Partial<Record<"Kaleng" | "Sachet" | "Drip Bag", number>>;
@@ -38,6 +43,7 @@ export const HARGA_KALENG = 55000;
 export const HARGA_SACHET = 15000;
 
 /** Label format per bahasa (tampil di tombol, kartu, keranjang) */
+export type FormatKey = "Kaleng" | "Sachet" | "Drip Bag";
 export const formatLabel = (f: string, locale: string) =>
   locale === "en" ? (f === "Kaleng" ? "Tin" : f) : f;
 
@@ -95,6 +101,11 @@ export const products: Product[] = [
       "Perpaduan Kesegaran Mint dengan rasa teh hijau yang otentik. Racikan yang menyegarkan di awal dengan sentuhan hangat kayu manis dan aroma lembut bunga melati—menemani setiap momen bermakna Anda.",
     descriptionEn:
       "A blend of refreshing mint and authentic green tea flavor. Refreshing at first sip with a warm touch of cinnamon and the gentle aroma of jasmine—accompanying your every meaningful moment.",
+    experience:
+      "Setiap tegukan Ayurvana menghadirkan momen menenangkan — aroma herbal lembut menyelimuti, disusul kehangatan kayu manis yang memeluk di akhir. Teh yang sempurna untuk waktu refleksi pagi atau relaksasi menjelang malam.",
+    experienceEn:
+      "Every sip of Ayurvana brings a calming moment — a gentle herbal aroma envelops you, followed by the warm embrace of cinnamon at the finish. The perfect tea for morning reflection or evening relaxation.",
+    variantInfo: { Kaleng: "1 kaleng isi 6 tea bags", Sachet: "1 sachet isi 1 tea bag" },
     tastingNotes: ["Fresh", "Citrusy", "Floral", "Warm"],
     tastingNotesEn: ["Fresh", "Citrusy", "Floral", "Warm"],
     ingredients: "Teh Hijau · Daun Mint · Bunga Melati · Lemon · Kayu Manis",
@@ -126,6 +137,11 @@ export const products: Product[] = [
       "Pesona Aroma Floral dengan rasa teh hitam khas Indonesia. Teh hitam pilihan yang memadukan keharuman lavender dan melati dengan sentuhan bunga forget-me-not—elegan dalam setiap seduhan.",
     descriptionEn:
       "The charm of a floral aroma combined with the taste of classic Indonesian black tea. Selected black tea combining the fragrance of lavender and jasmine with a touch of forget-me-not—elegant in every brew.",
+    experience:
+      "Asmaranala merayakan kehangatan dan romantisme — aroma bunga yang elegan membuka setiap seduhan, meninggalkan kesan lembut yang berkesan. Pilihan sempurna untuk afternoon tea bersama orang tersayang.",
+    experienceEn:
+      "Asmaranala celebrates warmth and romance — an elegant floral aroma opens every brew, leaving a soft and memorable impression. The perfect choice for afternoon tea with your loved ones.",
+    variantInfo: { Kaleng: "1 kaleng isi 6 tea bags", Sachet: "1 sachet isi 1 tea bag" },
     tastingNotes: ["Floral", "Aromatic", "Delicate", "Refined"],
     tastingNotesEn: ["Floral", "Aromatic", "Delicate", "Refined"],
     ingredients: "Teh Hitam · Bunga Lavender · Bunga Melati · Bunga Forget-Me-Not",
@@ -159,6 +175,11 @@ export const products: Product[] = [
       "Manis Alami dari buah yang berpadu dengan hangatnya rempah. Caffeine-free herbal fruit infusion dari buah naga dan goji berry dengan aroma serai, kapulaga, dan bunga lawang.",
     descriptionEn:
       "The natural sweetness of fruit blended with the warmth of spices. A caffeine-free herbal fruit infusion of dragon fruit and goji berry with lemongrass, cardamom, and star anise.",
+    experience:
+      "Amondini menghadirkan kehangatan tropis — manis buah naga dan goji berry menyatu dengan rempah aromatik, menciptakan kelezatan caffeine-free yang menenangkan. Nikmati kapan saja tanpa khawatir kafein.",
+    experienceEn:
+      "Amondini brings tropical warmth — the sweetness of dragon fruit and goji berry unites with aromatic spices, creating a soothing caffeine-free indulgence. Enjoy anytime without worrying about caffeine.",
+    variantInfo: { Kaleng: "1 kaleng isi 6 tea bags", Sachet: "1 sachet isi 1 tea bag" },
     tastingNotes: ["Naturally Sweet", "Aromatic", "Fruity", "Warm"],
     tastingNotesEn: ["Naturally Sweet", "Aromatic", "Fruity", "Warm"],
     ingredients: "Buah Naga · Goji Berry · Daun Sereh · Kapulaga · Bunga Lawang",
@@ -190,6 +211,11 @@ export const products: Product[] = [
       "Sentuhan Hangat dengan Aroma Floral yang lembut dan berkarakter. Kehangatan kayu manis berpadu dengan kelembutan chamomile dan kesegaran serai—menenangkan di setiap tegukan.",
     descriptionEn:
       "A warm touch with a soft yet distinctive floral aroma. The warmth of cinnamon blends with the softness of chamomile and the freshness of lemongrass—soothing in every sip.",
+    experience:
+      "Arunika adalah pelukan hangat di setiap cangkir — chamomile yang menenangkan dipeluk kehangatan kayu manis, diberi kesegaran oleh serai. Teman sempurna untuk melepas lelah di akhir hari.",
+    experienceEn:
+      "Arunika is a warm embrace in every cup — calming chamomile hugged by the warmth of cinnamon, brightened with lemongrass freshness. The perfect companion to unwind at the end of the day.",
+    variantInfo: { Kaleng: "1 kaleng isi 6 tea bags", Sachet: "1 sachet isi 1 tea bag" },
     tastingNotes: ["Floral", "Aromatik", "Herbal", "Warm"],
     tastingNotesEn: ["Floral", "Aromatic", "Herbal", "Warm"],
     ingredients: "Bunga Chamomile · Daun Sereh · Kayu Manis",
