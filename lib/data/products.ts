@@ -103,7 +103,7 @@ export const products: Product[] = [
     brewingEn: "70–85°C · 3–5 min · 5g / 200ml",
     formats: ["Kaleng", "Sachet"],
     priceByFormat: { Kaleng: HARGA_KALENG, Sachet: HARGA_SACHET },
-    hoverImage: "/images/tea/ayurvana-komposisi.webp",
+    hoverImage: "/images/tea/ayurvana-sqbc.png",
     images: [
       "/images/tea/ayurvana-kaleng.webp",
       "/images/tea/ayurvana-sachet.webp",
@@ -134,7 +134,7 @@ export const products: Product[] = [
     brewingEn: "70–85°C · 3–5 min · 5g / 200ml",
     formats: ["Kaleng", "Sachet"],
     priceByFormat: { Kaleng: HARGA_KALENG, Sachet: HARGA_SACHET },
-    hoverImage: "/images/tea/asmaranala-komposisi.webp",
+    hoverImage: "/images/tea/asmaranala-sqbc.png",
     images: [
       "/images/tea/asmaranala-kaleng.webp",
       "/images/tea/asmaranala-sachet.webp",
@@ -167,7 +167,7 @@ export const products: Product[] = [
     brewingEn: "70–85°C · 3–5 min · 5g / 200ml",
     formats: ["Kaleng", "Sachet"],
     priceByFormat: { Kaleng: HARGA_KALENG, Sachet: HARGA_SACHET },
-    hoverImage: "/images/tea/amondini-komposisi.webp",
+    hoverImage: "/images/tea/amondini-sqbc.png",
     images: [
       "/images/tea/amondini-kaleng.webp",
       "/images/tea/amondini-sachet.webp",
@@ -198,7 +198,7 @@ export const products: Product[] = [
     brewingEn: "70–85°C · 3–5 min · 5g / 200ml",
     formats: ["Kaleng", "Sachet"],
     priceByFormat: { Kaleng: HARGA_KALENG, Sachet: HARGA_SACHET },
-    hoverImage: "/images/tea/arunika-komposisi.webp",
+    hoverImage: "/images/tea/arunika-sqbc.png",
     images: [
       "/images/tea/arunika-kaleng.webp",
       "/images/tea/arunika-sachet.webp",
