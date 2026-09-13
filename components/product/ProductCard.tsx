@@ -75,7 +75,7 @@ export function ProductCard({ product }: { product: Product }) {
               src={product.hoverImage}
               alt={`Komposisi ${product.name}`}
               loading="lazy"
-              className="absolute inset-0 h-full w-full scale-105 object-contain p-2 opacity-0 transition duration-500 group-hover:scale-100 group-hover:opacity-100"
+              className="absolute inset-0 h-full w-full scale-105 object-cover opacity-0 transition duration-500 group-hover:scale-100 group-hover:opacity-100"
             />
           </>
         )}
