@@ -1,12 +1,16 @@
 "use client";
 
 import { site } from "@/lib/site";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { ScrollReveal } from "@/components/common/ScrollReveal";
 
 export default function ContactPage() {
   const t = useTranslations("contact");
-  const wa = `https://wa.me/${site.whatsapp}?text=Halo%20Cerita%20Meramuda!`;
+  const locale = useLocale();
+  const waText = encodeURIComponent(
+    locale === "en" ? "Hello Cerita Meramuda!" : "Halo Cerita Meramuda!"
+  );
+  const wa = `https://wa.me/${site.whatsapp}?text=${waText}`;
   return (
     <div className="container-cmm py-14">
       <ScrollReveal>
@@ -34,7 +38,7 @@ export default function ContactPage() {
           <ScrollReveal delay={3}>
             <div className="rounded-2xl border border-brand-pink/10 bg-brand-creamlight p-6">
               <h3 className="font-serif text-lg text-brand-browndark">{t("jamOperasional")}</h3>
-              <p className="text-brand-browndark/80">{site.hours}</p>
+              <p className="text-brand-browndark/80">{locale === "en" ? site.hoursEn : site.hours}</p>
             </div>
           </ScrollReveal>
         </div>

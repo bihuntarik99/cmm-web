@@ -66,6 +66,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const addItem = useCallback(
     (product: Product, format: string, qty = 1) => {
+      // Harga per-format (Kaleng/Sachet/Drip Bag); fallback ke harga umum
+      const fmtKey = format as "Kaleng" | "Sachet" | "Drip Bag";
+      const perFormat = product.priceByFormat?.[fmtKey];
+      const priceNum = perFormat ?? parsePrice(product.price);
+      const priceLabel = perFormat != null ? formatRupiah(perFormat) : product.price;
       setItems((prev) => {
         const idx = prev.findIndex(
           (i) => i.slug === product.slug && i.format === format
@@ -80,8 +85,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
           {
             slug: product.slug,
             name: product.name,
-            price: product.price,
-            priceNum: parsePrice(product.price),
+            price: priceLabel,
+            priceNum,
             image: product.images[0],
             format,
             qty,

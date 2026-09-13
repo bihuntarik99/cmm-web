@@ -3,10 +3,10 @@
 import { useTranslations } from "next-intl";
 
 const slots = [
-  { id: 1, poster: "/images/hero/display-tea-1.jpg" },
-  { id: 2, poster: "/images/hero/tea-amon.jpg" },
-  { id: 3, poster: "/images/hero/brewing-lifestyle.jpg" },
-  { id: 4, poster: "/images/cold-drinks/display-1.jpg" },
+  { id: 1, name: "Ayurvana", video: "/videos/ayurvana.mp4", poster: "/videos/posters/ayurvana.webp" },
+  { id: 2, name: "Amondini", video: "/videos/amondini.mp4", poster: "/videos/posters/amondini.webp" },
+  { id: 3, name: "Arunika", video: "/videos/arunika.mp4", poster: "/videos/posters/arunika.webp" },
+  { id: 4, name: "Asmaranala", video: "/videos/asmaranala.mp4", poster: "/videos/posters/asmaranala.webp" },
 ];
 
 export function VerticalVideo() {
@@ -26,31 +26,19 @@ export function VerticalVideo() {
           {slots.map((s) => (
             <div
               key={s.id}
-              className="video-vertical w-full overflow-hidden rounded-2xl border border-brand-pink/20 bg-brand-browndark shadow-soft"
+              className="video-vertical group relative w-full overflow-hidden rounded-2xl border border-brand-pink/20 bg-brand-browndark shadow-soft"
             >
-              {/*
-                Slot video vertikal (9:16).
-                Ganti dengan <video> atau <iframe> bila file video sudah tersedia.
-                Contoh:
-                <video src="/videos/video-1.mp4" poster={s.poster} controls playsInline className="h-full w-full object-cover" />
-              */}
-              <div className="relative flex h-full w-full flex-col items-center justify-center gap-3 p-4 text-center">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={s.poster}
-                  alt={`Video ${s.id}`}
-                  loading="lazy"
-                  className="absolute inset-0 h-full w-full object-cover opacity-40"
-                />
-                <div className="float-anim relative flex h-12 w-12 items-center justify-center rounded-full bg-brand-pink text-white shadow-elevated">
-                  <svg viewBox="0 0 24 24" className="ml-1 h-6 w-6 fill-current">
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                </div>
-                <p className="relative text-xs text-white/70">
-                  {t("placeholder")}
-                </p>
-              </div>
+              <video
+                src={s.video}
+                poster={s.poster}
+                controls
+                playsInline
+                preload="metadata"
+                className="h-full w-full object-cover"
+              />
+              <span className="pointer-events-none absolute left-3 top-3 rounded-full bg-black/45 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
+                {s.id}. {s.name}
+              </span>
             </div>
           ))}
         </div>

@@ -23,6 +23,8 @@ export default function ProdukIndex() {
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {(Object.keys(categoryMeta) as ProductCategory[]).map((key, i) => {
           const c = categoryMeta[key];
+          const label = locale === "en" ? c.labelEn : c.label;
+          const sub = locale === "en" ? c.subEn : c.sub;
           return (
             <ScrollReveal key={key} delay={(i % 3) + 1 as 1 | 2 | 3}>
               <Link
@@ -30,9 +32,9 @@ export default function ProdukIndex() {
                 className="product-card group block rounded-2xl border border-brand-pink/15 bg-brand-creamlight p-8"
               >
                 <h3 className="font-serif text-2xl text-brand-browndark group-hover:text-brand-pink">
-                  {c.label}
+                  {label}
                 </h3>
-                {c.sub && <p className="mt-2 text-sm text-brand-pink/70">{c.sub}</p>}
+                {sub && <p className="mt-2 text-sm text-brand-pink/70">{sub}</p>}
                 <span className="mt-4 inline-block text-sm text-brand-pink link-underline">{t("lihatProduk")} →</span>
               </Link>
             </ScrollReveal>

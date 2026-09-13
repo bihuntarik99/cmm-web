@@ -9,7 +9,7 @@
   "hero": {
     "badge": "Cerita Meramuda",
     "title": "A Tale of Flavor from Garden to Cup",
-    "subtitle": "Artisan tea, coffee, cold drinks, and hampers—crafted with care from the rich flavors of the archipelago.",
+    "subtitle": "Inspired by the richness of Indonesia, thoughtfully crafted for every meaningful moment.",
     "ctaProduk": "Explore Products",
     "ctaHampers": "View Hampers"
   },
@@ -29,16 +29,14 @@
     "lihat": "View",
     "unduhKatalog": "Download Catalogue",
     "katalogDesc": "Explore the full Cerita Meramuda collection in our digital catalogue.",
-    "katalogCompress": "Catalogue (Compressed)",
-    "katalogHd": "Catalogue (HD)"
+    "katalogDownload": "Download Catalogue (PDF)"
   },
   "video": {
     "title": "Story in Motion",
-    "desc": "Witness the story behind every Cerita Meramuda blend.",
-    "placeholder": "Vertical video will appear here"
+    "desc": "Witness the story behind every Cerita Meramuda blend."
   },
   "product": {
-    "beliViaWa": "Buy via WA",
+    "beliViaWa": "Buy via WhatsApp",
     "tambahKeranjang": "+ Cart",
     "tambahKeranjangDetail": "+ Add to Cart",
     "beliLangsung": "Buy Now",
@@ -90,23 +88,23 @@
     "menemukanRahasia": "Discovering the Secret of Unique Regional Drinks",
     "artisanTea": "Artisan Tea",
     "p1": "Cerita Meramuda is an Artisan Tea created to revive regional beverages—a premium spice tea product crafted exclusively from high-quality natural ingredients such as flowers, spices, and selected tea leaves.",
-    "p2": "Each Artisan Tea variant is designed to provide a special tea-drinking experience, combining harmonious flavors that are calming and refreshing in every serving. This product emphasizes the authenticity of natural raw materials and handmade production.",
+    "p2": "Each Artisan Tea variant is designed to provide a special tea-drinking experience, combining harmonious flavors that are both calming and refreshing in every serving. This product emphasizes the authenticity of natural raw materials and handmade production.",
     "quote": "“Crafted by nature, refined by hand.”",
     "p3": "We are committed to delivering tea that not only delights the palate but also reflects quality and integrity in every step of production.",
     "kualitasKeamanan": "Quality & Safety",
-    "prosesBaik": "A Good Process",
+    "prosesBaik": "It All Starts with a Good Process",
     "prosesDesc": "We believe that a good cup of tea starts with a good process. Therefore, all our products are produced in facilities that meet food safety standards and are Halal certified. From ingredient selection, production, to packaging, every step is carefully done to deliver quality tea that is safe, consistent, and ready to accompany your every moment.",
     "hospitality": "Hospitality",
     "pilihanHospitality": "Hospitality Industry Choice",
     "hospitalityDesc": "Cerita Meramuda presents artisan tea ready to be the choice for hotels, cafes, restaurants, and various hospitality industry players. Crafted from a blend of selected tea, spices, flowers, and natural fruits, each variant is designed to deliver unique flavors, consistent quality, and a memorable tea experience for every guest.",
     "setiapMomen": "Every Moment",
     "melengkapiSajian": "Complementing Every Serving",
-    "momenDesc1": "Cerita Meramuda is designed to complement every moment, from breakfast, afternoon tea, to signature beverages. Can be served hot or cold, every artisan tea blend combines selected tea, spices, flowers, and natural fruits to deliver a distinctive flavor character and a different tea experience.",
+    "momenDesc1": "Cerita Meramuda is designed to complement every moment, from breakfast, afternoon tea, to signature beverages. Served hot or cold, every artisan tea blend combines selected tea, spices, flowers, and natural fruits to deliver a distinctive flavor character and a one-of-a-kind tea experience.",
     "momenDesc2": "Partner with Cerita Meramuda and deliver a memorable tea experience for every guest.",
     "sejarahKami": "Our History",
     "ourHistory": "Our History",
-    "historyP1": "Cerita Meramuda (Discovering the Secret of Unique Regional Drinks) is inspired by the richness of Indonesian spices, collaborated with the potential of regional excellence. We believe that every region holds a unique flavor identity. Behind every ingredient lies history, culture, and local wisdom that shapes its uniqueness.",
-    "historyP2": "All our tea and coffee raw materials are sourced from various regions across the archipelago known for their distinctive taste and aroma. This collaboration is not merely a combination of ingredients, but represents identity and a modern interpretation of archipelago flavors. Every tea blend we prepare without machines to deliver a unique taste experience from the first sip.",
+    "historyP1": "Cerita Meramuda (Discovering the Secret of Unique Regional Drinks) is inspired by the richness of Indonesian spices, combined with the outstanding potential of each region. We believe that every region holds a unique flavor identity. Behind every ingredient lies history, culture, and local wisdom that shapes its uniqueness.",
+    "historyP2": "All our tea and coffee raw materials are sourced from various regions across the archipelago known for their distinctive taste and aroma. This collaboration is not merely a combination of ingredients, but represents identity and a modern interpretation of archipelago flavors. Every tea blend is prepared by hand, without machines, to deliver a unique taste experience from the very first sip.",
     "nilaiKami": "Our Values",
     "craftedNature": "Crafted by Nature",
     "craftedNatureDesc": "High-quality natural ingredients from the archipelago's riches.",
@@ -150,9 +148,9 @@
   "faq": {
     "title": "Frequently Asked Questions",
     "q1": "How do I order?",
-    "a1": "Currently orders are placed via WhatsApp. Click the Buy via WhatsApp button on the product.",
+    "a1": "Currently orders are placed via WhatsApp. Click the Buy Now button on the product, or add products to your cart and checkout.",
     "q2": "What tea formats are available?",
-    "a2": "Our teas are available in Tin and Sachet formats.",
+    "a2": "Our teas are available in Tin (IDR 55,000) and Sachet (IDR 15,000) formats.",
     "q3": "Is wholesale available?",
     "a3": "Yes. Contact us through the Wholesale page for B2B inquiries.",
     "q4": "Can hampers be customized?",
@@ -162,6 +160,8 @@
     "berbagi": "Sharing",
     "title": "Hampers & Gifts",
     "desc": "Express warmth through Cerita Meramuda's curated hampers.",
+    "isiHampers": "What's Inside",
+    "hampersLainnya": "Other Hampers",
     "kustomTitle": "Want custom hampers?",
     "kustomDesc": "Cerita Meramuda accepts hampers orders for companies and special events.",
     "hubungiWa": "Contact via WhatsApp"

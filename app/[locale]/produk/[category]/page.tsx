@@ -4,22 +4,26 @@ import { notFound } from "next/navigation";
 import { getByCategory, categoryMeta, ProductCategory } from "@/lib/data/products";
 import { ProductCard } from "@/components/product/ProductCard";
 import { ScrollReveal } from "@/components/common/ScrollReveal";
+import { useLocale } from "next-intl";
 
 const valid = (c: string): c is ProductCategory => c in categoryMeta;
 
 export default function CategoryPage({ params }: { params: { category: string } }) {
+  const locale = useLocale();
   if (!valid(params.category)) return notFound();
   const items = getByCategory(params.category);
   const meta = categoryMeta[params.category];
+  const label = locale === "en" ? meta.labelEn : meta.label;
+  const sub = locale === "en" ? meta.subEn : meta.sub;
   return (
     <div className="container-cmm py-14">
       {/* Header dengan animasi */}
       <ScrollReveal>
         <header className="mb-10 text-center">
-          <p className="text-sm uppercase tracking-widest text-brand-pink">{meta.label}</p>
-          <h1 className="section-title mt-2">{meta.label}</h1>
-          {meta.sub && (
-            <p className="mx-auto mt-3 max-w-xl text-brand-browndark/70">{meta.sub}</p>
+          <p className="text-sm uppercase tracking-widest text-brand-pink">{label}</p>
+          <h1 className="section-title mt-2">{label}</h1>
+          {sub && (
+            <p className="mx-auto mt-3 max-w-xl text-brand-browndark/70">{sub}</p>
           )}
         </header>
       </ScrollReveal>

@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { site } from "@/lib/site";
@@ -14,7 +15,11 @@ export function Header() {
   const { count, openCart } = useCart();
   const locale = useLocale();
   const t = useTranslations("nav");
-  const tNav = useTranslations("nav");
+
+  // Ambil pathname saat ini (client-side, aman untuk hydration)
+  const pathname = usePathname();
+  const restPath = pathname.replace(/^\/(id|en)/, "");
+  const langHref = `/${locale === "id" ? "en" : "id"}${restPath}`;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -61,10 +66,10 @@ export function Header() {
                       className="block border-b border-brand-pink/10 px-4 py-3 last:border-b-0 hover:bg-brand-pink/5"
                     >
                       <div className="font-serif text-base text-brand-browndark">
-                        {c.label}
+                        {locale === "en" ? c.labelEn : c.label}
                       </div>
-                      {c.sub && (
-                        <div className="mt-0.5 text-xs text-brand-pink/70">{c.sub}</div>
+                      {(locale === "en" ? c.subEn : c.sub) && (
+                        <div className="mt-0.5 text-xs text-brand-pink/70">{locale === "en" ? c.subEn : c.sub}</div>
                       )}
                     </Link>
                   ))}
@@ -92,7 +97,7 @@ export function Header() {
         {/* Desktop cart + social */}
         <div className="hidden items-center gap-2 md:flex">
           <Link
-            href={`/${locale === "id" ? "en" : "id"}${typeof window !== "undefined" ? window.location.pathname.replace(/^\/(id|en)/, "") : ""}`}
+            href={langHref}
             className="rounded-full border border-white/40 px-3 py-1 text-xs font-medium text-white transition hover:bg-white/20"
           >
             {locale === "id" ? "EN" : "ID"}
@@ -100,8 +105,10 @@ export function Header() {
           <a href={site.shopee} target="_blank" rel="noreferrer" aria-label="Shopee" className="flex h-9 w-9 items-center justify-center rounded-full transition hover:bg-white/20">
             <ShopeeIcon className="h-6 w-6" />
           </a>
-          <a href={site.tiktokShop} target="_blank" rel="noreferrer" aria-label="TikTok Shop" className="flex h-9 w-9 items-center justify-center rounded-full text-white transition hover:bg-white/20">
-            <TikTokIcon />
+          <a href={site.tiktokShop} target="_blank" rel="noreferrer" aria-label="TikTok Shop" className="flex h-9 w-9 items-center justify-center rounded-full transition hover:bg-white/20">
+            {/* Logo TikTok Shop (revisi) */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/icons/tiktokshop.webp" alt="TikTok Shop" className="h-6 w-6 object-contain" />
           </a>
           <a href={site.instagram} target="_blank" rel="noreferrer" aria-label="Instagram" className="flex h-9 w-9 items-center justify-center rounded-full text-white transition hover:bg-white/20">
             <InstagramIcon />
@@ -112,7 +119,7 @@ export function Header() {
           {/* Cart */}
           <button
             onClick={openCart}
-            aria-label="Keranjang"
+            aria-label={locale === "en" ? "Cart" : "Keranjang"}
             className="relative flex h-9 w-9 items-center justify-center rounded-full text-white transition hover:bg-white/20"
           >
             <svg viewBox="0 0 24 24" className="h-5 w-5 fill-current">
@@ -129,14 +136,14 @@ export function Header() {
         {/* Mobile toggle */}
         <div className="flex items-center gap-1 md:hidden">
           <Link
-            href={`/${locale === "id" ? "en" : "id"}${typeof window !== "undefined" ? window.location.pathname.replace(/^\/(id|en)/, "") : ""}`}
+            href={langHref}
             className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 text-xs font-medium text-white"
           >
             {locale === "id" ? "EN" : "ID"}
           </Link>
           <button
             onClick={openCart}
-            aria-label="Keranjang"
+            aria-label={locale === "en" ? "Cart" : "Keranjang"}
             className="relative flex h-10 w-10 items-center justify-center rounded-full border border-white/40 text-white"
           >
             <svg viewBox="0 0 24 24" className="h-5 w-5 fill-current">
@@ -149,7 +156,7 @@ export function Header() {
             )}
           </button>
           <button
-            aria-label="Menu"
+            aria-label={locale === "en" ? "Menu" : "Menu"}
             onClick={() => setOpen((v) => !v)}
             className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 text-white"
           >
@@ -167,7 +174,7 @@ export function Header() {
             </Link>
             {Object.entries(categoryMeta).map(([key, c]) => (
               <Link key={key} href={`/${locale}/produk/${key}`} onClick={() => setOpen(false)} className="rounded-lg py-2 pl-8 pr-3 text-sm text-white/70 hover:bg-white/10">
-                {c.label} <span className="text-xs text-white/50">— {c.sub}</span>
+                {locale === "en" ? c.labelEn : c.label} <span className="text-xs text-white/50">— {locale === "en" ? c.subEn : c.sub}</span>
               </Link>
             ))}
             {[
@@ -182,7 +189,10 @@ export function Header() {
             ))}
             <div className="mt-2 flex gap-2 px-3">
               <a href={site.shopee} target="_blank" rel="noreferrer" className="flex h-10 w-10 items-center justify-center rounded-full bg-white/15 text-white"><ShopeeIcon /></a>
-              <a href={site.tiktokShop} target="_blank" rel="noreferrer" className="flex h-10 w-10 items-center justify-center rounded-full bg-white/15 text-white"><TikTokIcon /></a>
+              <a href={site.tiktokShop} target="_blank" rel="noreferrer" aria-label="TikTok Shop" className="flex h-10 w-10 items-center justify-center rounded-full bg-white/15 text-white">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/images/icons/tiktokshop.webp" alt="TikTok Shop" className="h-6 w-6 object-contain" />
+              </a>
               <a href={site.instagram} target="_blank" rel="noreferrer" className="flex h-10 w-10 items-center justify-center rounded-full bg-white/15 text-white"><InstagramIcon /></a>
               <a href={site.tiktok} target="_blank" rel="noreferrer" className="flex h-10 w-10 items-center justify-center rounded-full bg-white/15 text-white"><TikTokIcon /></a>
             </div>

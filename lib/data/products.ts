@@ -9,7 +9,7 @@ export type Product = {
   slug: string;
   name: string;
   category: ProductCategory;
-  blend?: "ayurvana" | "asmaranala" | "aparajita" | "amondini" | "arunika";
+  blend?: "ayurvana" | "asmaranala" | "amondini" | "arunika";
   short: string;
   shortEn: string;
   description: string;
@@ -21,22 +21,65 @@ export type Product = {
   brewing?: string;
   brewingEn?: string;
   formats?: ("Kaleng" | "Sachet" | "Drip Bag")[];
+  /** Harga per format — dipakai cart & product detail */
+  priceByFormat?: Partial<Record<"Kaleng" | "Sachet" | "Drip Bag", number>>;
+  /** Gambar komposisi yang muncul saat hover kartu produk */
+  hoverImage?: string;
   images: string[];
-  infoImage?: string;
+  /** Gambar keterangan (KET) per bahasa */
+  infoImageId?: string;
+  infoImageEn?: string;
   price: string;
   featured?: boolean;
   order: number;
 };
 
+export const HARGA_KALENG = 55000;
+export const HARGA_SACHET = 15000;
+
+/** Label format per bahasa (tampil di tombol, kartu, keranjang) */
+export const formatLabel = (f: string, locale: string) =>
+  locale === "en" ? (f === "Kaleng" ? "Tin" : f) : f;
+
 export const categoryMeta: Record<
   ProductCategory,
-  { label: string; href: string; sub?: string }
+  { label: string; labelEn: string; href: string; sub?: string; subEn?: string }
 > = {
-  "tea-blend": { label: "Tea Blend", href: "/produk/tea-blend", sub: "Ayurvana, Asmaranala" },
-  tisane: { label: "Tisane", href: "/produk/tisane", sub: "Aparajita, Amondini, Arunika" },
-  kopi: { label: "Kopi", href: "/produk/kopi", sub: "Arindama, Askala — Drip Bag" },
-  "cold-brew": { label: "Cold Brew", href: "/produk/cold-brew", sub: "Cold Brew Ayurvana, Cold Brew Amondini, Cold Brew Arunika, Cold Brew Asmaranala" },
-  "milk-tea": { label: "Milk Tea", href: "/produk/milk-tea", sub: "Lavender Milk Tea, Blue Matcha Milk Tea" },
+  "tea-blend": {
+    label: "Tea Blend",
+    labelEn: "Tea Blend",
+    href: "/produk/tea-blend",
+    sub: "Ayurvana, Asmaranala",
+    subEn: "Ayurvana, Asmaranala",
+  },
+  tisane: {
+    label: "Tisane",
+    labelEn: "Tisane",
+    href: "/produk/tisane",
+    sub: "Amondini, Arunika",
+    subEn: "Amondini, Arunika",
+  },
+  kopi: {
+    label: "Kopi",
+    labelEn: "Coffee",
+    href: "/produk/kopi",
+    sub: "Arindama, Askala — Drip Bag",
+    subEn: "Arindama, Askala — Drip Bag",
+  },
+  "cold-brew": {
+    label: "Cold Brew",
+    labelEn: "Cold Brew",
+    href: "/produk/cold-brew",
+    sub: "Cold Brew Ayurvana, Amondini, Arunika, Asmaranala",
+    subEn: "Cold Brew Ayurvana, Amondini, Arunika, Asmaranala",
+  },
+  "milk-tea": {
+    label: "Milk Tea",
+    labelEn: "Milk Tea",
+    href: "/produk/milk-tea",
+    sub: "Lavender Milk Tea, Blue Matcha Milk Tea",
+    subEn: "Lavender Milk Tea, Blue Matcha Milk Tea",
+  },
 };
 
 export const products: Product[] = [
@@ -46,27 +89,29 @@ export const products: Product[] = [
     name: "Ayurvana",
     category: "tea-blend",
     blend: "ayurvana",
-    short: "Segar di awal, hangat di akhir — menenangkan.",
-    shortEn: "Fresh at first, warm at the finish — calming.",
+    short: "Perpaduan kesegaran mint dengan rasa teh hijau yang otentik.",
+    shortEn: "A blend of refreshing mint and authentic green tea flavor.",
     description:
-      "Menghadirkan kelembutan teh hijau yang dipadukan dengan kesegaran daun mint dan lemon, kemudian diimbali kehangatan kayu manis serta aroma lembut bunga melati. Perpaduan ini menciptakan cita rasa yang segar di awal, hangat di akhir, dengan sensasi yang menenangkan dan melegakan di setiap tegukan.",
+      "Perpaduan Kesegaran Mint dengan rasa teh hijau yang otentik. Racikan yang menyegarkan di awal dengan sentuhan hangat kayu manis dan aroma lembut bunga melati—menemani setiap momen bermakna Anda.",
     descriptionEn:
-      "Brings the softness of green tea combined with the freshness of mint leaves and lemon, balanced by the warmth of cinnamon and the gentle aroma of jasmine. This blend creates a flavor that is fresh at first, warm at the finish, with a calming and soothing sensation in every sip.",
-    tastingNotes: ["Segar Botanical", "Aroma Melati Lembut", "Hangat & Menenangkan"],
-    tastingNotesEn: ["Fresh Botanical", "Soft Jasmine Aroma", "Warm & Calming"],
-    ingredients: "Teh Hijau, Daun Mint, Lemon, Kayu Manis, Bunga Melati",
-    ingredientsEn: "Green Tea, Mint Leaves, Lemon, Cinnamon, Jasmine Flowers",
-    brewing: "Air 80–85°C · 3–5 menit · 2,5g / 250ml",
-    brewingEn: "Water 80–85°C · 3–5 min · 2.5g / 250ml",
+      "A blend of refreshing mint and authentic green tea flavor. Refreshing at first sip with a warm touch of cinnamon and the gentle aroma of jasmine—accompanying your every meaningful moment.",
+    tastingNotes: ["Fresh", "Citrusy", "Floral", "Warm"],
+    tastingNotesEn: ["Fresh", "Citrusy", "Floral", "Warm"],
+    ingredients: "Teh Hijau · Daun Mint · Bunga Melati · Lemon · Kayu Manis",
+    ingredientsEn: "Green Tea · Mint Leaves · Jasmine Flower · Lemon · Cinnamon",
+    brewing: "70–85°C · 3–5 menit · 5g / 200ml",
+    brewingEn: "70–85°C · 3–5 min · 5g / 200ml",
     formats: ["Kaleng", "Sachet"],
+    priceByFormat: { Kaleng: HARGA_KALENG, Sachet: HARGA_SACHET },
+    hoverImage: "/images/tea/ayurvana-komposisi.webp",
     images: [
-      "/images/tea/ayurvana.jpg",
-      "/images/tea/ayurvana-kaleng.jpg",
-      "/images/tea/ayurvana-sachet.jpg",
-      "/images/tea/ayurvana-up.jpg",
+      "/images/tea/ayurvana-kaleng.webp",
+      "/images/tea/ayurvana-sachet.webp",
+      "/images/tea/ayurvana-komposisi.webp",
     ],
-    infoImage: "/images/tea/ayurvana-ket.jpg",
-    price: "Rp 85.000",
+    infoImageId: "/images/tea/ayurvana-ket-id.webp",
+    infoImageEn: "/images/tea/ayurvana-ket-en.webp",
+    price: "Rp 55.000",
     featured: true,
     order: 1,
   },
@@ -75,117 +120,95 @@ export const products: Product[] = [
     name: "Asmaranala",
     category: "tea-blend",
     blend: "asmaranala",
-    short: "Teh hitam berkarakter dengan sentuhan floral elegan.",
-    shortEn: "Characterful black tea with an elegant floral touch.",
+    short: "Pesona aroma floral dengan rasa teh hitam khas Indonesia.",
+    shortEn: "The charm of a floral aroma combined with the taste of classic Indonesian black tea.",
     description:
-      "Memadukan karakter khas teh hitam Indonesia dengan aroma floral dari bunga lavender, melati, dan forget-me-not. Menghasilkan seduhan dengan rasa yang kaya, lembut, dan berkarakter, diakhiri sentuhan bunga yang elegan serta memberikan pengalaman minum teh yang menenangkan.",
+      "Pesona Aroma Floral dengan rasa teh hitam khas Indonesia. Teh hitam pilihan yang memadukan keharuman lavender dan melati dengan sentuhan bunga forget-me-not—elegan dalam setiap seduhan.",
     descriptionEn:
-      "Combines the distinctive character of Indonesian black tea with the floral aroma of lavender, jasmine, and forget-me-not. Produces a brew that is rich, smooth, and characterful, finished with an elegant floral touch that provides a calming tea experience.",
-    tastingNotes: ["Teh Hitam Kaya", "Aroma Lavender", "Floral Elegan"],
-    tastingNotesEn: ["Rich Black Tea", "Lavender Aroma", "Elegant Floral"],
-    ingredients: "Teh Hitam, Bunga Lavender, Bunga Melati, Bunga Forget-Me-Not",
-    ingredientsEn: "Black Tea, Lavender Flowers, Jasmine Flowers, Forget-Me-Not Flowers",
-    brewing: "Air 90–95°C · 3–4 menit · 2,5g / 250ml",
-    brewingEn: "Water 90–95°C · 3–4 min · 2.5g / 250ml",
+      "The charm of a floral aroma combined with the taste of classic Indonesian black tea. Selected black tea combining the fragrance of lavender and jasmine with a touch of forget-me-not—elegant in every brew.",
+    tastingNotes: ["Floral", "Aromatic", "Delicate", "Refined"],
+    tastingNotesEn: ["Floral", "Aromatic", "Delicate", "Refined"],
+    ingredients: "Teh Hitam · Bunga Lavender · Bunga Melati · Bunga Forget-Me-Not",
+    ingredientsEn: "Black Tea · Lavender Flowers · Jasmine Flowers · Forget-Me-Not Flowers",
+    brewing: "70–85°C · 3–5 menit · 5g / 200ml",
+    brewingEn: "70–85°C · 3–5 min · 5g / 200ml",
     formats: ["Kaleng", "Sachet"],
+    priceByFormat: { Kaleng: HARGA_KALENG, Sachet: HARGA_SACHET },
+    hoverImage: "/images/tea/asmaranala-komposisi.webp",
     images: [
-      "/images/tea/asmaranala.jpg",
-      "/images/tea/asmaranala-kaleng.jpg",
-      "/images/tea/asmaranala-sachet.jpg",
-      "/images/tea/asmaranala-up.jpg",
+      "/images/tea/asmaranala-kaleng.webp",
+      "/images/tea/asmaranala-sachet.webp",
+      "/images/tea/asmaranala-komposisi.webp",
     ],
-    infoImage: "/images/tea/asmaranala-ket.jpg",
-    price: "Rp 95.000",
+    infoImageId: "/images/tea/asmaranala-ket-id.webp",
+    infoImageEn: "/images/tea/asmaranala-ket-en.webp",
+    price: "Rp 55.000",
     featured: true,
     order: 2,
   },
 
   // ==================== TISANE ====================
   {
-    slug: "aparajita",
-    name: "Aparajita",
-    category: "tisane",
-    blend: "aparajita",
-    short: "Teh putih, bunga telang, stevia & daun mint — sejuk lembut.",
-    shortEn: "White tea, butterfly pea, stevia & mint — cool and gentle.",
-    description:
-      "Kelembutan teh putih berpadu dengan sentuhan floral dari bunga telang, manis alami stevia, dan kesegaran daun mint. Racikan ini menghadirkan cita rasa yang ringan, bersih, dan menyegarkan dengan sensasi sejuk yang lembut di setiap tegukan. Nikmati hangat untuk momen relaksasi atau sajikan dingin sebagai minuman yang menyegarkan.",
-    descriptionEn:
-      "The softness of white tea blends with the floral touch of butterfly pea flowers, the natural sweetness of stevia, and the freshness of mint leaves. This blend delivers a light, clean, and refreshing taste with a gentle cool sensation in every sip. Enjoy hot for moments of relaxation or serve cold as a refreshing drink.",
-    tastingNotes: ["Ringan & Bersih", "Floral Bunga Telang", "Sejuk Menyegarkan"],
-    tastingNotesEn: ["Light & Clean", "Butterfly Pea Floral", "Cool Refreshing"],
-    ingredients: "Teh Putih, Bunga Telang, Stevia, Daun Mint",
-    ingredientsEn: "White Tea, Butterfly Pea Flowers, Stevia, Mint Leaves",
-    brewing: "Air 75–80°C · 3–4 menit · 2,5g / 250ml",
-    brewingEn: "Water 75–80°C · 3–4 min · 2.5g / 250ml",
-    formats: ["Kaleng", "Sachet"],
-    images: [
-      "/images/tea/arunika.jpg",
-      "/images/tea/arunika-kaleng.jpg",
-      "/images/tea/arunika-sachet.jpg",
-      "/images/tea/arunika-up.jpg",
-    ],
-    infoImage: "/images/tea/arunika-ket.jpg",
-    price: "Rp 90.000",
-    featured: true,
-    order: 3,
-  },
-  {
     slug: "amondini",
     name: "Amondini",
     category: "tisane",
     blend: "amondini",
-    short: "Caffeine-free herbal fruit infusion — manis & aromatik.",
-    shortEn: "Caffeine-free herbal fruit infusion — sweet & aromatic.",
+    short: "Manis alami dari buah yang berpadu dengan hangatnya rempah.",
+    shortEn: "The natural sweetness of fruit blended with the warmth of spices.",
     description:
-      "Menghadirkan perpaduan harmonis antara manis alami buah naga dan goji berry dengan aroma hangat serai, kapulaga, dan bunga lawang. Sebagai caffeine-free herbal fruit infusion, setiap seduhan menawarkan cita rasa yang lembut, aromatik, dan menyegarkan, dengan sentuhan rempah yang hangat di akhir tegukan.",
+      "Manis Alami dari buah yang berpadu dengan hangatnya rempah. Caffeine-free herbal fruit infusion dari buah naga dan goji berry dengan aroma serai, kapulaga, dan bunga lawang.",
     descriptionEn:
-      "Presents a harmonious blend of natural sweetness from dragon fruit and goji berry with the warm aroma of lemongrass, cardamom, and star anise. As a caffeine-free herbal fruit infusion, every brew offers a mild, aromatic, and refreshing taste, with a warm spice touch at the finish.",
-    tastingNotes: ["Manis Buah Naga", "Aromatik Rempah", "Caffeine-Free"],
-    tastingNotesEn: ["Dragon Fruit Sweetness", "Aromatic Spices", "Caffeine-Free"],
-    ingredients: "Daun Sereh, Kapulaga, Bunga Lawang, Goji Berry, Buah Naga",
-    ingredientsEn: "Lemongrass, Cardamom, Star Anise, Goji Berry, Dragon Fruit",
-    brewing: "Air 95°C · 4–5 menit · 3g / 250ml",
-    brewingEn: "Water 95°C · 4–5 min · 3g / 250ml",
+      "The natural sweetness of fruit blended with the warmth of spices. A caffeine-free herbal fruit infusion of dragon fruit and goji berry with lemongrass, cardamom, and star anise.",
+    tastingNotes: ["Naturally Sweet", "Aromatic", "Fruity", "Warm"],
+    tastingNotesEn: ["Naturally Sweet", "Aromatic", "Fruity", "Warm"],
+    ingredients: "Buah Naga · Goji Berry · Daun Sereh · Kapulaga · Bunga Lawang",
+    ingredientsEn: "Dragon Fruit · Gojiberry · Lemongrass · Cardamom · Star Anise",
+    brewing: "70–85°C · 3–5 menit · 5g / 200ml",
+    brewingEn: "70–85°C · 3–5 min · 5g / 200ml",
     formats: ["Kaleng", "Sachet"],
+    priceByFormat: { Kaleng: HARGA_KALENG, Sachet: HARGA_SACHET },
+    hoverImage: "/images/tea/amondini-komposisi.webp",
     images: [
-      "/images/tea/amondini.jpg",
-      "/images/tea/amondini-kaleng.jpg",
-      "/images/tea/amondini-sachet.jpg",
-      "/images/tea/amondini-up.jpg",
+      "/images/tea/amondini-kaleng.webp",
+      "/images/tea/amondini-sachet.webp",
+      "/images/tea/amondini-komposisi.webp",
     ],
-    infoImage: "/images/tea/amondini-ket.jpg",
-    price: "Rp 90.000",
+    infoImageId: "/images/tea/amondini-ket-id.webp",
+    infoImageEn: "/images/tea/amondini-ket-en.webp",
+    price: "Rp 55.000",
     featured: true,
-    order: 4,
+    order: 3,
   },
   {
     slug: "arunika",
     name: "Arunika",
     category: "tisane",
     blend: "arunika",
-    short: "Serai, chamomile & kayu manis — menenangkan & relaksasi.",
-    shortEn: "Lemongrass, chamomile & cinnamon — calming & relaxing.",
+    short: "Sentuhan hangat dengan aroma floral yang lembut dan berkarakter.",
+    shortEn: "A warm touch with a soft yet distinctive floral aroma.",
     description:
-      "Memadukan kesegaran alami serai dengan kelembutan bunga chamomile dan kehangatan kayu manis. Menghasilkan seduhan yang lembut, aromatik, dan menenangkan, dengan sentuhan manis alami dari rempah yang memberikan rasa nyaman dan relaksasi alami di setiap tegukan.",
+      "Sentuhan Hangat dengan Aroma Floral yang lembut dan berkarakter. Kehangatan kayu manis berpadu dengan kelembutan chamomile dan kesegaran serai—menenangkan di setiap tegukan.",
     descriptionEn:
-      "Combines the natural freshness of lemongrass with the softness of chamomile flowers and the warmth of cinnamon. Produces a brew that is smooth, aromatic, and calming, with a natural sweet touch from spices that provides comfort and natural relaxation in every sip.",
-    tastingNotes: ["Lembut & Aromatik", "Chamomile Menenangkan", "Hangat Rempah"],
-    tastingNotesEn: ["Smooth & Aromatic", "Calming Chamomile", "Warm Spices"],
-    ingredients: "Daun Sereh, Bunga Chamomile, Kayu Manis",
-    ingredientsEn: "Lemongrass, Chamomile Flowers, Cinnamon",
-    brewing: "Air 95°C · 4–5 menit · 2,5g / 250ml",
-    brewingEn: "Water 95°C · 4–5 min · 2.5g / 250ml",
+      "A warm touch with a soft yet distinctive floral aroma. The warmth of cinnamon blends with the softness of chamomile and the freshness of lemongrass—soothing in every sip.",
+    tastingNotes: ["Floral", "Aromatik", "Herbal", "Warm"],
+    tastingNotesEn: ["Floral", "Aromatic", "Herbal", "Warm"],
+    ingredients: "Bunga Chamomile · Daun Sereh · Kayu Manis",
+    ingredientsEn: "Chamomile Flowers · Lemongrass · Cinnamon",
+    brewing: "70–85°C · 3–5 menit · 5g / 200ml",
+    brewingEn: "70–85°C · 3–5 min · 5g / 200ml",
     formats: ["Kaleng", "Sachet"],
+    priceByFormat: { Kaleng: HARGA_KALENG, Sachet: HARGA_SACHET },
+    hoverImage: "/images/tea/arunika-komposisi.webp",
     images: [
-      "/images/tea/arunika.jpg",
-      "/images/tea/arunika-kaleng.jpg",
-      "/images/tea/arunika-sachet.jpg",
-      "/images/tea/arunika-up.jpg",
+      "/images/tea/arunika-kaleng.webp",
+      "/images/tea/arunika-sachet.webp",
+      "/images/tea/arunika-komposisi.webp",
     ],
-    infoImage: "/images/tea/arunika-ket.jpg",
-    price: "Rp 85.000",
-    order: 5,
+    infoImageId: "/images/tea/arunika-ket-id.webp",
+    infoImageEn: "/images/tea/arunika-ket-en.webp",
+    price: "Rp 55.000",
+    featured: true,
+    order: 4,
   },
 
   // ==================== KOPI (Drip Bag) ====================
@@ -206,10 +229,11 @@ export const products: Product[] = [
     brewing: "Drip Bag · Air 90–92°C · 150–180ml · 1 drip bag",
     brewingEn: "Drip Bag · Water 90–92°C · 150–180ml · 1 drip bag",
     formats: ["Drip Bag"],
+    priceByFormat: { "Drip Bag": 75000 },
     images: ["/images/coffee/kopi-arindama.jpg"],
     price: "Rp 75.000",
     featured: true,
-    order: 6,
+    order: 5,
   },
   {
     slug: "askala",
@@ -228,9 +252,10 @@ export const products: Product[] = [
     brewing: "Drip Bag · Air 90–92°C · 150–180ml · 1 drip bag",
     brewingEn: "Drip Bag · Water 90–92°C · 150–180ml · 1 drip bag",
     formats: ["Drip Bag"],
+    priceByFormat: { "Drip Bag": 75000 },
     images: ["/images/coffee/kopi-arindama.jpg"],
     price: "Rp 75.000",
-    order: 7,
+    order: 6,
   },
 
   // ==================== COLD BREW ====================
@@ -247,9 +272,10 @@ export const products: Product[] = [
       "Ayurvana Cold Brew refreshes your day with clear, cool, and calming natural herbs. The cold version of the Ayurvana blend—fresh at first, warm at the finish.",
     ingredients: "Teh Hijau, Daun Mint, Lemon, Kayu Manis, Bunga Melati",
     ingredientsEn: "Green Tea, Mint Leaves, Lemon, Cinnamon, Jasmine Flowers",
-    images: ["/images/cold-drinks/ayurvana-coldbrew.jpg"],
+    hoverImage: "/images/tea/ayurvana-komposisi-cb.webp",
+    images: ["/images/cold-drinks/cb-ayurvana.webp"],
     price: "Rp 35.000",
-    order: 8,
+    order: 7,
   },
   {
     slug: "cb-amondini",
@@ -264,9 +290,10 @@ export const products: Product[] = [
       "Ready-to-drink cold brew from the Amondini blend. Cold-steeped to extract dragon fruit, goji berry, and warm spice flavors without bitterness.",
     ingredients: "Daun Sereh, Kapulaga, Bunga Lawang, Goji Berry, Buah Naga",
     ingredientsEn: "Lemongrass, Cardamom, Star Anise, Goji Berry, Dragon Fruit",
-    images: ["/images/cold-drinks/amondini-coldbrew.jpg"],
+    hoverImage: "/images/tea/amondini-komposisi-cb.webp",
+    images: ["/images/cold-drinks/cb-amondini.webp"],
     price: "Rp 35.000",
-    order: 9,
+    order: 8,
   },
   {
     slug: "cb-arunika",
@@ -281,16 +308,17 @@ export const products: Product[] = [
       "The cold version of Arunika—fresh lemongrass, smooth chamomile, and warm cinnamon in a ready-to-drink bottle that calms.",
     ingredients: "Daun Sereh, Bunga Chamomile, Kayu Manis",
     ingredientsEn: "Lemongrass, Chamomile Flowers, Cinnamon",
-    images: ["/images/cold-drinks/display-1.jpg"],
+    hoverImage: "/images/tea/arunika-komposisi-cb.webp",
+    images: ["/images/cold-drinks/cb-arunika.webp"],
     price: "Rp 35.000",
-    order: 10,
+    order: 9,
   },
   {
     slug: "cb-asmaranala",
     name: "Cold Brew Asmaranala",
     category: "cold-brew",
     blend: "asmaranala",
-    short: "Cold brew teh hitam mawar & beri segar manis.",
+    short: "Cold brew teh hitam floral yang segar & manis.",
     shortEn: "Black tea rose & berry sweet cold brew.",
     description:
       "Minuman dingin segar dari blend Asmaranala. Kombinasi teh hitam, lavender, melati, dan forget-me-not dingin yang membangkitkan kesegaran seketika.",
@@ -298,9 +326,10 @@ export const products: Product[] = [
       "Refreshing cold drink from the Asmaranala blend. A cold combination of black tea, lavender, jasmine, and forget-me-not that instantly refreshes.",
     ingredients: "Teh Hitam, Bunga Lavender, Bunga Melati, Bunga Forget-Me-Not",
     ingredientsEn: "Black Tea, Lavender Flowers, Jasmine Flowers, Forget-Me-Not Flowers",
-    images: ["/images/cold-drinks/asmaranala-coldbrew.jpg"],
+    hoverImage: "/images/tea/asmaranala-komposisi-cb.webp",
+    images: ["/images/cold-drinks/cb-asmaranala.webp"],
     price: "Rp 35.000",
-    order: 11,
+    order: 10,
   },
 
   // ==================== MILK TEA ====================
@@ -318,10 +347,10 @@ export const products: Product[] = [
     tastingNotesEn: ["Fragrant Lavender", "Creamy & Smooth", "Calming"],
     ingredients: "Teh, Susu, Bunga Lavender",
     ingredientsEn: "Tea, Milk, Lavender Flowers",
-    images: ["/images/cold-drinks/milk-tea-lavender.jpg"],
+    images: ["/images/cold-drinks/lavender-milk-tea.webp"],
     price: "Rp 38.000",
     featured: true,
-    order: 12,
+    order: 11,
   },
   {
     slug: "blue-matcha-milk-tea",
@@ -337,24 +366,144 @@ export const products: Product[] = [
     tastingNotesEn: ["Blue Butterfly Pea", "Creamy Milk", "Beautiful Visual"],
     ingredients: "Teh Telang (Butterfly Pea), Susu",
     ingredientsEn: "Butterfly Pea Tea, Milk",
-    images: ["/images/cold-drinks/blue-milk-tea.jpg"],
+    images: ["/images/cold-drinks/blue-matcha-milk-tea.webp"],
     price: "Rp 38.000",
     featured: true,
-    order: 13,
+    order: 12,
   },
 ];
 
-export const hampers = [
-  { slug: "hampers-2", name: "Luxury Hampers 2", image: "/images/hampers/hampers-2.jpg", short: "All Season / Celebration", price: "Rp 275.000" },
-  { slug: "hampers-3", name: "Luxury Hampers 3", image: "/images/hampers/hampers-3.jpg", short: "All Season / Executive", price: "Rp 450.000" },
-  { slug: "imlek-1", name: "Imlek Lunar Deluxe 1", image: "/images/hampers/imlek-1.jpg", short: "Imlek / Chinese New Year", price: "Rp 325.000", season: "Imlek" },
-  { slug: "imlek-2", name: "Imlek Lunar Grand Fortune 2", image: "/images/hampers/imlek-2.jpg", short: "Imlek / Chinese New Year", price: "Rp 550.000", season: "Imlek" },
-  { slug: "hp-13", name: "Gift Set HP 13", image: "/images/hampers/hp-13.jpg", short: "2 Sachet Tea + Tumbler", price: "Rp 195.000" },
-  { slug: "hp-15", name: "Gift Set HP 15", image: "/images/hampers/hp-15.jpg", short: "Kaleng Tea + Sachet Kopi", price: "Rp 225.000" },
-  { slug: "hp-16", name: "Gift Set HP 16", image: "/images/hampers/hp-16.jpg", short: "3 Sachet + Cookies", price: "Rp 245.000" },
-  { slug: "hp-17", name: "Gift Set HP 17", image: "/images/hampers/hp-17.jpg", short: "Tea & Cold Brew Selection", price: "Rp 310.000" },
+// ==================== HAMPERS ====================
+export type Hampers = {
+  slug: string;
+  name: string;
+  nameEn: string;
+  short: string;
+  shortEn: string;
+  description: string;
+  descriptionEn: string;
+  image: string;
+  imageAlt: string;
+  price: string;
+  priceNum: number;
+  /** Isi hampers (untuk keterangan produk) */
+  contents: string[];
+  contentsEn: string[];
+  order: number;
+};
+
+export const hampers: Hampers[] = [
+  {
+    slug: "essential-classic",
+    name: "Essential Classic Edition",
+    nameEn: "Essential Classic Edition",
+    short: "Kesederhanaan yang bermakna & rasa yang otentik.",
+    shortEn: "Meaningful simplicity & authentic taste.",
+    description:
+      "Hadirkan kehangatan dalam setiap seduhan dengan Essential Classic Edition dari Cerita Meramuda. Koleksi ini dirancang khusus bagi Anda yang menghargai kesederhanaan yang bermakna dan kualitas rasa yang otentik. Terbungkus dalam anyaman eksklusif, hampers ini adalah bentuk perhatian terbaik untuk kerabat, kolega, maupun diri sendiri.",
+    descriptionEn:
+      "Bring warmth to every brew with the Essential Classic Edition from Cerita Meramuda. This collection is specially crafted for those who appreciate meaningful simplicity and authentic taste. Wrapped in exclusive woven packaging, this hamper is the finest expression of care for family, colleagues, or yourself.",
+    image: "/images/hampers/essential-classic.webp",
+    imageAlt: "/images/hampers/essential-classic-2.webp",
+    price: "Rp 250.000",
+    priceNum: 250000,
+    contents: ["1 pcs Amondini", "1 pcs Ayurvana", "Greating 100g", "Woven Bag & Greeting Card"],
+    contentsEn: ["1 pcs Amondini", "1 pcs Ayurvana", "Greating 100g", "Woven Bag & Greeting Card"],
+    order: 1,
+  },
+  {
+    slug: "wedding-gift",
+    name: "Wedding Gift Luxury Edition",
+    nameEn: "Wedding Gift Luxury Edition",
+    short: "Simbol kasih sayang yang mekar sempurna.",
+    shortEn: "A symbol of love in full bloom.",
+    description:
+      "Abadikan momen kebahagiaan yang tak terlupakan dengan Wedding Gift Luxury Edition. Dirancang khusus sebagai simbol kasih sayang yang mekar sempurna, hampers ini memadukan kemewahan visual dengan kehangatan rasa. Pilihan hantaran yang sempurna untuk merayakan janji suci dan awal perjalanan baru.",
+    descriptionEn:
+      "Capture unforgettable moments of happiness with the Wedding Gift Luxury Edition. Specially designed as a symbol of love in full bloom, this hamper combines visual luxury with the warmth of taste. The perfect gift to celebrate a sacred promise and the beginning of a new journey.",
+    image: "/images/hampers/wedding-gift.webp",
+    imageAlt: "/images/hampers/wedding-gift-2.webp",
+    price: "Rp 650.000",
+    priceNum: 650000,
+    contents: ["Kurasi teh artisan premium", "Kemasan hantaran mewah", "Greeting card eksklusif"],
+    contentsEn: ["Curated premium artisan tea", "Luxurious gift packaging", "Exclusive greeting card"],
+    order: 2,
+  },
+  {
+    slug: "mini-single",
+    name: "Mini Single Origin Edition",
+    nameEn: "Mini Single Origin Edition",
+    short: "Perhatian kecil yang berkesan & ekonomis.",
+    shortEn: "A small gesture that leaves an impression.",
+    description:
+      "Ingin memberikan perhatian kecil namun berkesan? Mini Single Origin Edition adalah jawabannya. Diciptakan bagi Anda yang mencari keseimbangan antara kualitas teh artisan premium dengan harga yang tetap ekonomis. Cocok untuk buah tangan di berbagai acara, souvenir, atau sekadar bingkisan \u201cterima kasih\u201d yang personal.",
+    descriptionEn:
+      "Want to give a small yet memorable token of appreciation? The Mini Single Origin Edition is the answer. Created for those seeking balance between premium artisan tea quality and an economical price. Perfect as a gift for various occasions, souvenirs, or a personal \u201cthank you\u201d package.",
+    image: "/images/hampers/mini-single.webp",
+    imageAlt: "/images/hampers/mini-single-2.webp",
+    price: "Rp 85.000",
+    priceNum: 85000,
+    contents: ["Single tea pilihan", "Kemasan souvenir elegan", "Greeting card"],
+    contentsEn: ["Selected single tea", "Elegant souvenir packaging", "Greeting card"],
+    order: 3,
+  },
+  {
+    slug: "premium-signature",
+    name: "Premium Signature Edition",
+    nameEn: "Premium Signature Edition",
+    short: "Kurasi teh artisan tertinggi untuk mancanegara.",
+    shortEn: "Our finest artisan tea curation for international journeys.",
+    description:
+      "Bawa kehangatan tradisi dan cita rasa terbaik nusantara ke kancah internasional. Premium Signature Edition adalah persembahan kurasi teh artisan tertinggi dari Cerita Meramuda yang dirancang khusus sebagai buah tangan eksklusif untuk perjalanan luar negeri. Perpaduan antara kemewahan visual dan kepraktisan, menjadikannya hadiah yang membanggakan untuk kolega, kerabat, atau mitra bisnis di mancanegara.",
+    descriptionEn:
+      "Carry the warmth of tradition and the archipelago's finest flavors to the international stage. The Premium Signature Edition is Cerita Meramuda's highest artisan tea curation, specially designed as an exclusive gift for overseas journeys. Combining visual luxury with practicality, it makes a proud gift for colleagues, relatives, or business partners abroad.",
+    image: "/images/hampers/premium-signature.webp",
+    imageAlt: "/images/hampers/premium-signature-2.webp",
+    price: "Rp 350.000",
+    priceNum: 350000,
+    contents: ["Kurasi teh artisan tertinggi", "Kemasan praktis premium", "Greeting card eksklusif"],
+    contentsEn: ["Finest artisan tea curation", "Premium practical packaging", "Exclusive greeting card"],
+    order: 4,
+  },
+  {
+    slug: "chinese-new-year",
+    name: "Chinese New Year Edition",
+    nameEn: "Chinese New Year Edition",
+    short: "Hantaran hangat untuk Tahun Baru Imlek.",
+    shortEn: "A warm gift for the Lunar New Year.",
+    description:
+      "Tahun Baru Imlek ini, Cerita Meramuda menghadirkan persembahan khusus yang memadukan tradisi minum teh yang luhur dengan doa-doa terbaik untuk kesehatan dan kemakmuran. Sebuah hantaran yang hangat untuk mempererat tali silaturahmi dengan keluarga tercinta.",
+    descriptionEn:
+      "This Lunar New Year, Cerita Meramuda presents a special offering that unites the noble tradition of tea drinking with heartfelt wishes for health and prosperity. A warm gift to strengthen bonds with beloved family.",
+    image: "/images/hampers/chinese-new-year.webp",
+    imageAlt: "/images/hampers/chinese-new-year-2.webp",
+    price: "Rp 450.000",
+    priceNum: 450000,
+    contents: ["Kurasi teh artisan edisi Imlek", "Kemasan eksklusif bernuansa Imlek", "Greeting card"],
+    contentsEn: ["Lunar New Year artisan tea curation", "Exclusive festive packaging", "Greeting card"],
+    order: 5,
+  },
+  {
+    slug: "christmas",
+    name: "Merry Christmas Edition",
+    nameEn: "Merry Christmas Edition",
+    short: "Kehangatan teh artisan untuk musim Natal.",
+    shortEn: "Artisan tea warmth for the Christmas season.",
+    description:
+      "Sambut keajaiban Natal dan harapan baru di musim yang penuh cinta ini, Cerita Meramuda meracik kehangatan melalui teh artisan yang dikurasi khusus untuk melengkapi momen berkumpul bersama keluarga di depan pohon Natal atau saat menghitung mundur pergantian tahun.",
+    descriptionEn:
+      "Welcome the magic of Christmas and new hopes in this season of love. Cerita Meramuda crafts warmth through specially curated artisan tea to complement family gatherings by the Christmas tree or while counting down to the new year.",
+    image: "/images/hampers/christmas.webp",
+    imageAlt: "/images/hampers/christmas-2.webp",
+    price: "Rp 450.000",
+    priceNum: 450000,
+    contents: ["Kurasi teh artisan edisi Natal", "Kemasan eksklusif bernuansa Natal", "Greeting card"],
+    contentsEn: ["Christmas artisan tea curation", "Exclusive festive packaging", "Greeting card"],
+    order: 6,
+  },
 ];
 
 export const getProduct = (slug: string) => products.find((p) => p.slug === slug);
 export const getByCategory = (c: ProductCategory) =>
   products.filter((p) => p.category === c).sort((a, b) => a.order - b.order);
+export const getHampers = (slug: string) => hampers.find((h) => h.slug === slug);

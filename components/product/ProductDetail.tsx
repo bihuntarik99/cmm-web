@@ -2,21 +2,26 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Product, products, categoryMeta } from "@/lib/data/products";
+import { Product, products, categoryMeta, formatLabel } from "@/lib/data/products";
 import { ProductCard } from "@/components/product/ProductCard";
+import { priceForFormat } from "@/components/product/ProductCard";
 import { ScrollReveal } from "@/components/common/ScrollReveal";
 import { site } from "@/lib/site";
 import { useCart } from "@/lib/cart/CartContext";
+import { formatRupiah } from "@/lib/cart/CartContext";
 import { useFly } from "@/lib/cart/FlyContext";
 import { useLocale, useTranslations } from "next-intl";
 
 const categoryHref = (p: Product, locale: string) => `/${locale}${categoryMeta[p.category].href}`;
-const categoryLabel = (p: Product) => categoryMeta[p.category].label;
+const categoryLabel = (p: Product, locale: string) =>
+  locale === "en" ? categoryMeta[p.category].labelEn : categoryMeta[p.category].label;
 
-function waLink(p: Product) {
-  return `https://wa.me/${site.whatsapp}?text=Halo%20${encodeURIComponent(
-    site.name
-  )}!%20Saya%20tertarik%20produk%20${encodeURIComponent(p.name)}.`;
+function waLink(p: Product, locale: string) {
+  const text =
+    locale === "en"
+      ? `Hello ${site.name}! I'm interested in ${p.name}.`
+      : `Halo ${site.name}! Saya tertarik produk ${p.name}.`;
+  return `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(text)}`;
 }
 
 export function ProductDetail({ product }: { product: Product }) {
@@ -27,6 +32,9 @@ export function ProductDetail({ product }: { product: Product }) {
   const formats = product.formats || [""];
   const [selectedFormat, setSelectedFormat] = useState(formats[0]);
   const [qty, setQty] = useState(1);
+
+  const currentPrice = priceForFormat(product, selectedFormat);
+  const infoImage = locale === "en" ? product.infoImageEn : product.infoImageId;
 
   const handleAdd = (e: React.MouseEvent<HTMLButtonElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -47,7 +55,7 @@ export function ProductDetail({ product }: { product: Product }) {
     <div className="container-cmm py-12">
       <nav className="mb-6 text-sm text-brand-pink/60">
         <Link href={categoryHref(product, locale)} className="hover:text-brand-pink">
-          {categoryLabel(product)}
+          {categoryLabel(product, locale)}
         </Link>{" "}
         / <span className="text-brand-browndark">{product.name}</span>
       </nav>
@@ -78,25 +86,39 @@ export function ProductDetail({ product }: { product: Product }) {
         </div>
         </ScrollReveal>
 
-        {/* Info */}
+        {/* Info — model keterangan produk */}
         <ScrollReveal delay={1}>
         <div>
           <p className="text-sm uppercase tracking-widest text-brand-pink">
-            {categoryLabel(product)}
+            {categoryLabel(product, locale)}
           </p>
           <h1 className="mt-1 font-serif text-4xl text-brand-browndark">
             {product.name}
           </h1>
           <p className="mt-3 text-brand-browndark/80">{locale === "en" ? product.shortEn : product.short}</p>
 
-          {product.price && (
-            <p className="mt-3 text-2xl font-medium text-brand-pink">{product.price}</p>
+          {/* Harga mengikuti format terpilih */}
+              {currentPrice > 0 && (
+            <div className="mt-3 flex items-baseline gap-3">
+              <p className="text-2xl font-medium text-brand-pink">{formatRupiah(currentPrice)}</p>
+              {product.formats && product.formats.length > 1 && selectedFormat && (
+                <span className="rounded-full bg-brand-pink/10 px-3 py-0.5 text-xs text-brand-pink">
+                  {formatLabel(selectedFormat, locale)}
+                </span>
+              )}
+            </div>
+          )}
+          {/* Rentang harga bila multi-format */}
+          {product.priceByFormat && product.formats && product.formats.length > 1 && (
+            <p className="mt-1 text-xs text-brand-browndark/50">
+              {product.formats.map((f) => `${formatLabel(f, locale)} ${formatRupiah(priceForFormat(product, f))}`).join(" · ")}
+            </p>
           )}
 
           {product.tastingNotes && (
             <div className="mt-5">
               <h3 className="text-xs uppercase tracking-widest text-brand-pink/60">
-                t("catatanRasa")
+                {t("catatanRasa")}
               </h3>
               <div className="mt-2 flex flex-wrap gap-2">
                 {(locale === "en" ? product.tastingNotesEn : product.tastingNotes)?.map((note) => (
@@ -111,11 +133,11 @@ export function ProductDetail({ product }: { product: Product }) {
             </div>
           )}
 
-          {/* Pilihan format */}
+          {/* Pilihan format — tombol menampilkan harga */}
           {product.formats && product.formats.length > 0 && (
             <div className="mt-5">
               <h3 className="text-xs uppercase tracking-widest text-brand-pink/60">
-                t("pilihFormat")
+                {t("pilihFormat")}
               </h3>
               <div className="mt-2 flex flex-wrap gap-2">
                 {product.formats.map((f) => (
@@ -128,7 +150,12 @@ export function ProductDetail({ product }: { product: Product }) {
                         : "border-brand-pink/30 text-brand-pink hover:border-brand-pink"
                     }`}
                   >
-                    {f}
+                    {formatLabel(f, locale)}
+                    {product.priceByFormat?.[f] != null && (
+                      <span className="ml-1 text-xs opacity-80">
+                        {formatRupiah(product.priceByFormat[f]!)}
+                      </span>
+                    )}
                   </button>
                 ))}
               </div>
@@ -138,7 +165,7 @@ export function ProductDetail({ product }: { product: Product }) {
           {/* Qty selector */}
           <div className="mt-5">
             <h3 className="text-xs uppercase tracking-widest text-brand-pink/60">
-              t("jumlah")
+              {t("jumlah")}
             </h3>
             <div className="mt-2 flex items-center gap-3">
               <button
@@ -163,15 +190,15 @@ export function ProductDetail({ product }: { product: Product }) {
               onClick={handleAdd}
               className="btn-primary flex-1"
             >
-              t("tambahKeranjangDetail")
+              {t("tambahKeranjangDetail")}
             </button>
             <a
-              href={waLink(product)}
+              href={waLink(product, locale)}
               target="_blank"
               rel="noreferrer"
               className="btn-outline"
             >
-              t("beliLangsung")
+              {t("beliLangsung")}
             </a>
           </div>
 
@@ -197,18 +224,18 @@ export function ProductDetail({ product }: { product: Product }) {
         </ScrollReveal>
       </div>
 
-      {/* Komposisi Produk (gambar KET) */}
-      {product.infoImage && (
+      {/* Keterangan Produk (gambar KET per bahasa) */}
+      {infoImage && (
         <ScrollReveal>
         <section className="mt-14">
           <h2 className="section-title">{t("komposisiProduk")}</h2>
           <p className="mt-1 text-sm text-brand-pink/70">
             {t("komposisiDesc")} {product.name}.
           </p>
-          <div className="mt-6 overflow-hidden rounded-2xl border border-brand-pink/15 bg-brand-creamlight/80">
+          <div className="mt-6 overflow-hidden rounded-2xl border border-brand-pink/15 bg-brand-creamlight/80 p-4 sm:p-8">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={product.infoImage}
+              src={infoImage}
               alt={`Komposisi ${product.name}`}
               className="w-full object-contain"
             />

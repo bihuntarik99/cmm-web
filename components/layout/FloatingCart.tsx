@@ -2,9 +2,11 @@
 
 import { useCart } from "@/lib/cart/CartContext";
 import { useEffect, useRef, useState } from "react";
+import { useLocale } from "next-intl";
 
 export function FloatingCart() {
   const { count, openCart, items } = useCart();
+  const locale = useLocale();
   const [pop, setPop] = useState(false);
   const prevCount = useRef(count);
 
@@ -25,7 +27,7 @@ export function FloatingCart() {
       {/* Floating Cart */}
       <button
         onClick={openCart}
-        aria-label="Keranjang"
+        aria-label={locale === "en" ? "Cart" : "Keranjang"}
         data-cart-target
         className={`float-in relative flex h-14 w-14 items-center justify-center rounded-full bg-brand-pink text-white shadow-lg shadow-brand-pink/30 transition hover:scale-110 ${pop ? "cart-pop" : ""}`}
       >

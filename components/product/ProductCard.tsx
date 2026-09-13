@@ -2,20 +2,32 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Product, categoryMeta } from "@/lib/data/products";
+import { Product, categoryMeta, formatLabel } from "@/lib/data/products";
 import { site } from "@/lib/site";
 import { useCart } from "@/lib/cart/CartContext";
+import { formatRupiah } from "@/lib/cart/CartContext";
 import { useFly } from "@/lib/cart/FlyContext";
 import { useLocale, useTranslations } from "next-intl";
 
-function waLink(p: Product) {
-  return `https://wa.me/${site.whatsapp}?text=Halo%20${encodeURIComponent(
-    site.name
-  )}!%20Saya%20tertarik%20produk%20${encodeURIComponent(p.name)}.`;
+function waLink(p: Product, locale: string) {
+  const text =
+    locale === "en"
+      ? `Hello ${site.name}! I'm interested in ${p.name}.`
+      : `Halo ${site.name}! Saya tertarik produk ${p.name}.`;
+  return `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(text)}`;
 }
 
 export function hrefFor(p: Product, locale: string) {
   return `${categoryMeta[p.category].href.replace("/produk", `/${locale}/produk`)}/${p.slug}`;
+}
+
+/** Harga item untuk format terpilih */
+export function priceForFormat(p: Product, format: string): number {
+  const fmtKey = format as "Kaleng" | "Sachet" | "Drip Bag";
+  const perFormat = p.priceByFormat?.[fmtKey];
+  if (perFormat != null) return perFormat;
+  const n = parseInt(p.price.replace(/[^\d]/g, ""), 10);
+  return isNaN(n) ? 0 : n;
 }
 
 export function ProductCard({ product }: { product: Product }) {
@@ -25,6 +37,8 @@ export function ProductCard({ product }: { product: Product }) {
   const t = useTranslations("product");
   const formats = product.formats || [""];
   const [selectedFormat, setSelectedFormat] = useState(formats[0]);
+
+  const currentPrice = priceForFormat(product, selectedFormat);
 
   const handleAdd = (e: React.MouseEvent<HTMLButtonElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -41,23 +55,46 @@ export function ProductCard({ product }: { product: Product }) {
     <div className="product-card group flex flex-col overflow-hidden rounded-2xl border border-brand-pink/10 bg-brand-creamlight transition hover:shadow-soft">
       <Link
         href={hrefFor(product, locale)}
-        className="relative block aspect-[4/5] overflow-hidden bg-[#F4EEE2]"
+        className="relative block aspect-square overflow-hidden bg-[#F4EEE2]"
       >
+        {/* Gambar utama */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={product.images[0]}
           alt={product.name}
           loading="lazy"
-          className="h-full w-full object-contain p-2 transition duration-500 group-hover:scale-105"
+          className={`h-full w-full object-contain p-2 transition duration-500 ${
+            product.hoverImage ? "group-hover:opacity-0 group-hover:scale-105" : "group-hover:scale-105"
+          }`}
         />
+        {/* Gambar komposisi — muncul saat hover */}
+        {product.hoverImage && (
+          <>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={product.hoverImage}
+              alt={`Komposisi ${product.name}`}
+              loading="lazy"
+              className="absolute inset-0 h-full w-full scale-105 object-contain p-2 opacity-0 transition duration-500 group-hover:scale-100 group-hover:opacity-100"
+            />
+          </>
+        )}
       </Link>
       <div className="flex flex-1 flex-col p-4">
         <Link href={hrefFor(product, locale)}>
           <h3 className="font-serif text-xl text-brand-browndark">{product.name}</h3>
         </Link>
         <p className="mt-1 text-sm text-brand-browndark/70">{locale === "en" ? product.shortEn : product.short}</p>
-        {product.price && (
-          <p className="mt-2 text-sm font-medium text-brand-pink">{product.price}</p>
+        {currentPrice > 0 && (
+          <p className="mt-2 text-sm font-medium text-brand-pink">
+            {formatRupiah(currentPrice)}
+            {product.priceByFormat && formats.length > 1 && selectedFormat && (
+              <span className="text-xs text-brand-browndark/50">
+                {" "}
+                / {formatLabel(selectedFormat, locale)}
+              </span>
+            )}
+          </p>
         )}
 
         {/* Selector format */}
@@ -73,7 +110,7 @@ export function ProductCard({ product }: { product: Product }) {
                     : "bg-brand-pink/10 text-brand-pink hover:bg-brand-pink/20"
                 }`}
               >
-                {f}
+                {formatLabel(f, locale)}
               </button>
             ))}
           </div>
@@ -88,11 +125,11 @@ export function ProductCard({ product }: { product: Product }) {
             {t("tambahKeranjang")}
           </button>
           <a
-            href={waLink(product)}
+            href={waLink(product, locale)}
             target="_blank"
             rel="noreferrer"
             className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full border border-brand-pink/30 text-brand-pink hover:bg-brand-pink hover:text-white"
-            aria-label="Beli via WA"
+            aria-label={t("beliViaWa")}
           >
             <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current">
               <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm0 18.15c-1.52 0-3.01-.41-4.3-1.18l-.31-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.35c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.23-8.23 8.23z" />

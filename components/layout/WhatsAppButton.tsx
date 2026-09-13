@@ -1,15 +1,18 @@
+"use client";
+
 import { site } from "@/lib/site";
+import { useLocale } from "next-intl";
 
 export function WhatsAppButton() {
-  const href = `https://wa.me/${site.whatsapp}?text=Halo%20${encodeURIComponent(
-    site.name
-  )}!`;
+  const locale = useLocale();
+  const greeting = locale === "en" ? "Hello" : "Halo";
+  const href = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(`${greeting} ${site.name}!`)}`;
   return (
     <a
       href={href}
       target="_blank"
       rel="noreferrer"
-      aria-label="Chat WhatsApp"
+      aria-label={locale === "en" ? "Chat on WhatsApp" : "Chat WhatsApp"}
       className="fixed bottom-24 right-5 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg shadow-black/20 transition hover:scale-105"
     >
       <svg viewBox="0 0 24 24" className="h-7 w-7 fill-current">

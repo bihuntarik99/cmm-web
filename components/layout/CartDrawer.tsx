@@ -1,18 +1,20 @@
 "use client";
 
 import { useCart, formatRupiah } from "@/lib/cart/CartContext";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { site } from "@/lib/site";
+import { formatLabel } from "@/lib/data/products";
 
 export function CartDrawer() {
   const { items, isOpen, closeCart, removeItem, updateQty, clearCart, count, total } =
     useCart();
   const t = useTranslations("cart");
+  const locale = useLocale();
 
   const buildWaMessage = () => {
     const lines = items.map(
       (i, idx) =>
-        `${idx + 1}. ${i.name} (${i.format}) - ${formatRupiah(i.priceNum)} x${i.qty} = ${formatRupiah(i.priceNum * i.qty)}`
+        `${idx + 1}. ${i.name} (${formatLabel(i.format, locale)}) - ${formatRupiah(i.priceNum)} x${i.qty} = ${formatRupiah(i.priceNum * i.qty)}`
     );
     const text =
       t("waPesan", { brand: site.name }) + "\n\n" +
@@ -48,7 +50,7 @@ export function CartDrawer() {
           </h2>
           <button
             onClick={closeCart}
-            aria-label="Tutup"
+            aria-label={locale === "en" ? "Close" : "Tutup"}
             className="flex h-9 w-9 items-center justify-center rounded-full border border-brand-pink/30 text-brand-pink hover:bg-brand-pink hover:text-white"
           >
             ✕
@@ -96,12 +98,12 @@ export function CartDrawer() {
                           {item.name}
                         </h3>
                         <span className="rounded-full bg-brand-pink/10 px-2 py-0.5 text-xs text-brand-pink">
-                          {item.format}
+                          {formatLabel(item.format, locale)}
                         </span>
                       </div>
                       <button
                         onClick={() => removeItem(item.slug, item.format)}
-                        aria-label="Hapus"
+                        aria-label={locale === "en" ? "Remove" : "Hapus"}
                         className="text-xs text-brand-browndark/40 hover:text-brand-pink"
                       >
                         ✕

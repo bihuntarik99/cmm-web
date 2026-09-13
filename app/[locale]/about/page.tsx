@@ -121,13 +121,20 @@ export default function AboutPage() {
             <h2 className="section-title text-center">{t("nilaiKami")}</h2>
             <div className="mt-8 grid gap-6 md:grid-cols-3">
               {[
-                { t: t("craftedNature"), d: t("craftedNatureDesc") },
-                { t: t("refinedHand"), d: t("refinedHandDesc") },
-                { t: t("halal"), d: t("halalDesc") },
+                { t: t("craftedNature"), d: t("craftedNatureDesc"), icon: "/images/icons/icon-01.webp" },
+                { t: t("refinedHand"), d: t("refinedHandDesc"), icon: "/images/icons/icon-02.webp" },
+                { t: t("halal"), d: t("halalDesc"), icon: "/images/icons/icon-03.webp" },
               ].map((v, i) => (
                 <ScrollReveal key={v.t} delay={(i % 3) + 1 as 1 | 2 | 3}>
                   <div className="rounded-2xl border border-brand-pink/15 bg-brand-creamlight p-6 text-center">
-                    <h3 className="font-serif text-xl text-brand-browndark">{v.t}</h3>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={v.icon}
+                      alt={v.t}
+                      loading="lazy"
+                      className="mx-auto h-14 w-14 object-contain"
+                    />
+                    <h3 className="mt-3 font-serif text-xl text-brand-browndark">{v.t}</h3>
                     <p className="mt-2 text-sm text-brand-browndark/70">{v.d}</p>
                   </div>
                 </ScrollReveal>

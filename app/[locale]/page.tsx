@@ -1,6 +1,6 @@
 "use client";
 
-import { getByCategory, products } from "@/lib/data/products";
+import { getByCategory, products, hampers } from "@/lib/data/products";
 import { ProductCard } from "@/components/product/ProductCard";
 import { Hero } from "@/components/home/Hero";
 import { VerticalVideo } from "@/components/home/VerticalVideo";
@@ -14,6 +14,7 @@ export default function Home() {
   const locale = useLocale();
   const t = useTranslations("home");
   const p = (path: string) => `/${locale}${path}`;
+  const hampersTeaser = hampers.slice(0, 3);
 
   return (
     <>
@@ -91,8 +92,7 @@ export default function Home() {
                 <ProductCard key={p.slug} product={p} />
               ))}
             </div>
-          </ScrollReveal>
-        </div>
+          </ScrollReveal>        </div>
       </section>
 
       {/* Hampers */}
@@ -109,21 +109,33 @@ export default function Home() {
           </ScrollReveal>
           <ScrollReveal delay={1}>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
-            {[
-              { img: "/images/hampers/hampers-2.jpg", label: "Hampers 2" },
-              { img: "/images/hampers/hampers-3.jpg", label: "Hampers 3" },
-              { img: "/images/hampers/imlek-1.jpg", label: "Imlek Collection" },
-            ].map((h) => (
-              <div key={h.label} className="group overflow-hidden rounded-2xl border border-brand-pink/10 bg-white/60">
-                <div className="aspect-[4/3] overflow-hidden bg-[#F4EEE2]">
+            {hampersTeaser.map((h) => (
+              <Link
+                key={h.slug}
+                href={p(`/hampers/${h.slug}`)}
+                className="group overflow-hidden rounded-2xl border border-brand-pink/10 bg-white/60"
+              >
+                <div className="aspect-square overflow-hidden bg-[#F4EEE2]">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={h.img} alt={h.label} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" />
+                  <img
+                    src={h.image}
+                    alt={locale === "en" ? h.nameEn : h.name}
+                    className="h-full w-full object-contain transition duration-500 group-hover:scale-105"
+                    loading="lazy"
+                  />
                 </div>
                 <div className="p-4">
-                  <h3 className="font-serif text-lg text-brand-browndark">{h.label}</h3>
-                  <Link href={p("/hampers")} className="mt-2 inline-block text-sm text-brand-pink link-underline">{t("lihat")} →</Link>
+                  <h3 className="font-serif text-lg text-brand-browndark">
+                    {locale === "en" ? h.nameEn : h.name}
+                  </h3>
+                  {h.price && (
+                    <p className="mt-1 text-sm font-medium text-brand-pink">{h.price}</p>
+                  )}
+                  <span className="mt-2 inline-block text-sm text-brand-pink link-underline">
+                    {t("lihat")} →
+                  </span>
                 </div>
-              </div>
+              </Link>
             ))}
             </div>
           </ScrollReveal>
@@ -140,11 +152,8 @@ export default function Home() {
             </p>
           </div>
           <div className="flex flex-wrap gap-3 md:justify-end">
-            <a href={site.catalogueCompress} download className="rounded-full bg-brand-pinkdark px-6 py-3 text-sm font-medium text-white border border-white/40 hover:bg-white/10">
-              {t("katalogCompress")}
-            </a>
-            <a href={site.catalogueHd} download className="rounded-full border border-white/60 px-6 py-3 text-sm font-medium text-white hover:bg-white hover:text-brand-pink">
-              {t("katalogHd")}
+            <a href={site.catalogueFor(locale)} download className="rounded-full bg-brand-pinkdark px-6 py-3 text-sm font-medium text-white border border-white/40 hover:bg-white/10">
+              {t("katalogDownload")}
             </a>
           </div>
         </div>

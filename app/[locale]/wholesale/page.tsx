@@ -1,13 +1,19 @@
 "use client";
 
 import { site } from "@/lib/site";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { ScrollReveal } from "@/components/common/ScrollReveal";
 
 export default function WholesalePage() {
   const t = useTranslations("wholesale");
   const tContact = useTranslations("contact");
-  const wa = `https://wa.me/${site.whatsapp}?text=Halo%20Cerita%20Meramuda!%20Saya%20tertarik%20wholesale.`;
+  const locale = useLocale();
+  const waText = encodeURIComponent(
+    locale === "en"
+      ? "Hello Cerita Meramuda! I'm interested in wholesale."
+      : "Halo Cerita Meramuda! Saya tertarik wholesale."
+  );
+  const wa = `https://wa.me/${site.whatsapp}?text=${waText}`;
   return (
     <div>
       {/* Hero */}
@@ -20,7 +26,7 @@ export default function WholesalePage() {
               <p className="mt-4 max-w-md text-brand-cream/70">{t("desc")}</p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <a href={wa} target="_blank" rel="noreferrer" className="rounded-full bg-brand-cream px-6 py-3 text-sm font-medium text-brand-browndark hover:bg-white">{t("ajukanInquiry")}</a>
-                <a href={site.catalogueHd} download className="rounded-full border border-brand-cream/40 px-6 py-3 text-sm font-medium text-brand-cream hover:bg-brand-cream hover:text-brand-browndark">{t("unduhKatalog")}</a>
+                <a href={site.catalogueFor(locale)} download className="rounded-full border border-brand-cream/40 px-6 py-3 text-sm font-medium text-brand-cream hover:bg-brand-cream hover:text-brand-browndark">{t("unduhKatalog")}</a>
               </div>
             </div>
             <div className="overflow-hidden rounded-2xl">

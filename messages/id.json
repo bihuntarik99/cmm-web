@@ -9,7 +9,7 @@
   "hero": {
     "badge": "Cerita Meramuda",
     "title": "Kisah Rasa dari Kebun ke Cangkirmu",
-    "subtitle": "Teh artisan, kopi, minuman dingin, dan hampers—diracik dengan hati dari kekayaan rasa Nusantara.",
+    "subtitle": "Terinspirasi dari kekayaan alam Indonesia, diracik dengan penuh perhatian untuk menghadirkan makna di setiap momen.",
     "ctaProduk": "Jelajahi Produk",
     "ctaHampers": "Lihat Hampers"
   },
@@ -19,7 +19,7 @@
     "lihatSemua": "Lihat semua",
     "ritualSeduh": "Ritual Seduh",
     "dariKebun": "Dari kebun ke cangkirmu",
-    "lifestyleDesc": "Setiap blend Cerita Meramuda diracik dengan hati, menyatukan kekayaan rasa Nusantara menjadi momen yang bisa kamu nikmati setiap hari.",
+    "lifestyleDesc": "Setiap blend Cerita Meramuda diracik dengan hati, menyatukan kekayaan rasa Nusantara menjadi momen yang bisa Anda nikmati setiap hari.",
     "ceritaKami": "Cerita Kami",
     "menyegarkan": "Menyegarkan",
     "coldBrewMilkTea": "Cold Brew & Milk Tea",
@@ -29,16 +29,14 @@
     "lihat": "Lihat",
     "unduhKatalog": "Unduh Katalog",
     "katalogDesc": "Pelajari seluruh koleksi Cerita Meramuda dalam katalog digital kami.",
-    "katalogCompress": "Katalog (Compress)",
-    "katalogHd": "Katalog (HD)"
+    "katalogDownload": "Unduh Katalog (PDF)"
   },
   "video": {
     "title": "Cerita dalam Gerak",
-    "desc": "Saksikan kisah di balik setiap racikan Cerita Meramuda.",
-    "placeholder": "Video vertikal akan tampil di sini"
+    "desc": "Saksikan kisah di balik setiap racikan Cerita Meramuda."
   },
   "product": {
-    "beliViaWa": "Beli via WA",
+    "beliViaWa": "Beli via WhatsApp",
     "tambahKeranjang": "+ Keranjang",
     "tambahKeranjangDetail": "+ Tambah ke Keranjang",
     "beliLangsung": "Beli Langsung",
@@ -50,7 +48,7 @@
     "bahan": "Bahan",
     "caraSeduh": "Cara Seduh",
     "komposisiProduk": "Komposisi Produk",
-    "komposisiDesc": "Detail komposisi & informasi",
+    "komposisiDesc": "Detail komposisi & informasi untuk",
     "produkTerkait": "Produk Terkait",
     "wholesale": "Wholesale"
   },
@@ -74,7 +72,7 @@
     "kontak": "Kontak",
     "terhubung": "Terhubung",
     "ecommerce": "E-Commerce",
-    "sosmed": "Sosial Media",
+    "sosmed": "Media Sosial",
     "hakCipta": "Hak cipta dilindungi.",
     "privasi": "Kebijakan Privasi",
     "syarat": "Syarat & Ketentuan"
@@ -104,7 +102,7 @@
     "momenDesc1": "Cerita Meramuda dirancang untuk melengkapi setiap momen, mulai dari sarapan, afternoon tea, hingga signature beverage. Dapat disajikan hangat maupun dingin, setiap racikan artisan tea memadukan teh pilihan, rempah, bunga, dan buah alami untuk menghadirkan karakter rasa yang khas dan pengalaman menikmati teh yang berbeda.",
     "momenDesc2": "Bermitra dengan Cerita Meramuda dan hadirkan pengalaman minum teh yang berkesan bagi setiap tamu Anda.",
     "sejarahKami": "Sejarah Kami",
-    "ourHistory": "Our History",
+    "ourHistory": "Sejarah Kami",
     "historyP1": "Cerita Meramuda (Menemukan Rahasia Minuman Unik Daerah) terinspirasi dari kekayaan rempah Indonesia yang dikolaborasikan dengan potensi unggulan daerah. Kami percaya bahwa setiap daerah menyimpan identitas rasa yang unik. Di balik setiap bahan terdapat sejarah, budaya, dan kearifan lokal yang membentuk keunikan tersebut.",
     "historyP2": "Seluruh bahan baku teh dan kopi kami bersumber dari berbagai wilayah di Nusantara yang dikenal memiliki cita rasa dan aroma yang berkarakter. Kolaborasi ini bukan sekadar perpaduan bahan, melainkan merepresentasikan identitas dan interpretasi modern atas cita rasa Nusantara. Setiap racikan teh yang kami siapkan tanpa menggunakan mesin guna menghadirkan pengalaman rasa yang unik saat seduhan pertama.",
     "nilaiKami": "Nilai Kami",
@@ -131,7 +129,7 @@
     "b2b": "B2B",
     "title": "Wholesale & HORECA",
     "desc": "Cerita Meramuda menyediakan teh, kopi, dan minuman dingin untuk hotel, restoran, kafe, dan kebutuhan korporasi. Mari bermitra untuk menghadirkan rasa terbaik bagi pelanggan Anda.",
-    "ajukanInquiry": "Ajukan Inquiry",
+    "ajukanInquiry": "Ajukan Penawaran",
     "unduhKatalog": "Unduh Katalog",
     "kualitasKonsisten": "Kualitas Konsisten",
     "kualitasDesc": "Produksi terstandar untuk kebutuhan profesional.",
@@ -139,7 +137,7 @@
     "racikanDesc": "Blend khusus untuk brand dan menu Anda.",
     "dukunganLayanan": "Dukungan Layanan",
     "dukunganDesc": "Tim kami siap mendampingi kebutuhan operasional.",
-    "formInquiry": "Form Inquiry",
+    "formInquiry": "Form Penawaran",
     "perusahaan": "Perusahaan",
     "telepon": "Telepon",
     "kebutuhan": "Kebutuhan & pesan",
@@ -150,11 +148,11 @@
   "faq": {
     "title": "Pertanyaan Umum",
     "q1": "Bagaimana cara memesan?",
-    "a1": "Saat ini pemesanan dilakukan via WhatsApp. Klik tombol Beli via WhatsApp pada produk.",
+    "a1": "Saat ini pemesanan dilakukan via WhatsApp. Klik tombol Beli Langsung pada produk, atau masukkan produk ke keranjang lalu checkout.",
     "q2": "Apa format teh yang tersedia?",
-    "a2": "Teh kami tersedia dalam format Kaleng dan Sachet.",
+    "a2": "Teh kami tersedia dalam format Kaleng (Rp 55.000) dan Sachet (Rp 15.000).",
     "q3": "Apakah tersedia wholesale?",
-    "a3": "Ya. Hubungi kami melalui halaman Wholesale untuk inquiry B2B.",
+    "a3": "Ya. Hubungi kami melalui halaman Wholesale untuk kebutuhan B2B.",
     "q4": "Apakah hampers bisa dikustom?",
     "a4": "Tentu. Kami menerima pesanan hampers kustom untuk perusahaan dan acara spesial."
   },
@@ -162,6 +160,8 @@
     "berbagi": "Berbagi",
     "title": "Hampers & Hadiah",
     "desc": "Ungkapkan kehangatan lewat hampers pilihan Cerita Meramuda.",
+    "isiHampers": "Isi Hampers",
+    "hampersLainnya": "Hampers Lainnya",
     "kustomTitle": "Ingin hampers kustom?",
     "kustomDesc": "Cerita Meramuda menerima pesanan hampers untuk perusahaan dan acara spesial.",
     "hubungiWa": "Hubungi via WhatsApp"

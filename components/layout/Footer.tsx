@@ -21,9 +21,11 @@ export function Footer() {
             className="h-10 w-auto object-contain"
           />
           <p className="mt-4 text-sm leading-relaxed text-brand-cream/70">
-            {site.tagline}
+            {locale === "en" ? site.taglineEn : site.tagline}
           </p>
-          <p className="mt-4 text-xs text-brand-cream/60">{site.hours}</p>
+          <p className="mt-4 text-xs text-brand-cream/60">
+            {locale === "en" ? site.hoursEn : site.hours}
+          </p>
         </div>
 
         <div>
@@ -32,7 +34,7 @@ export function Footer() {
             <li><Link href={p("/produk")} className="hover:text-brand-cream">{t("semuaProduk")}</Link></li>
             <li><Link href={p("/produk/tea-blend")} className="hover:text-brand-cream">Tea Blend</Link></li>
             <li><Link href={p("/produk/tisane")} className="hover:text-brand-cream">Tisane</Link></li>
-            <li><Link href={p("/produk/kopi")} className="hover:text-brand-cream">{locale === "id" ? "Kopi" : "Coffee"}</Link></li>
+            <li><Link href={p("/produk/kopi")} className="hover:text-brand-cream">{locale === "en" ? "Coffee" : "Kopi"}</Link></li>
             <li><Link href={p("/produk/cold-brew")} className="hover:text-brand-cream">Cold Brew</Link></li>
             <li><Link href={p("/produk/milk-tea")} className="hover:text-brand-cream">Milk Tea</Link></li>
             <li><Link href={p("/hampers")} className="hover:text-brand-cream">{tNav("hampers")}</Link></li>
@@ -61,7 +63,8 @@ export function Footer() {
                 <ShopeeIcon className="h-6 w-6" />
               </a>
               <a href={site.tiktokShop} target="_blank" rel="noreferrer" aria-label="TikTok Shop" className="flex h-9 w-9 items-center justify-center rounded-full border border-brand-cream/30 text-brand-cream hover:bg-brand-pink hover:border-brand-pink">
-                <TikTokIcon />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/images/icons/tiktokshop.webp" alt="TikTok Shop" className="h-6 w-6 object-contain" />
               </a>
             </div>
           </div>

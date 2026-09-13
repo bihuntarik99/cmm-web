@@ -2,20 +2,28 @@ export const site = {
   name: "Cerita Meramuda",
   shortName: "CMM",
   tagline: "Kisah Rasa dari Kebun ke Cangkirmu",
-  whatsapp: "62811292390",
+  taglineEn: "A Tale of Flavor from Garden to Cup",
+  whatsapp: "6285718509797",
   email: "hello@ceritameramuda.id",
-  phoneDisplay: "+62 811 2923 90",
+  phoneDisplay: "0857 1850 9797",
   address: "Indonesia",
   hours: "Senin – Jumat · 09.00 – 17.00",
+  hoursEn: "Monday – Friday · 09.00 – 17.00",
   // E-commerce
   shopee: "https://shopee.co.id/ceritameramuda",
   tiktokShop: "https://shop.tiktok.com/@ceritameramuda",
   // Sosial media
   instagram: "https://instagram.com/ceritameramuda",
   tiktok: "https://tiktok.com/@ceritameramuda",
-  // Katalog
-  catalogueCompress: "/images/catalogue/catalogue-compress.pdf",
-  catalogueHd: "/images/catalogue/catalogue-hd.pdf",
+  // Katalog (per bahasa)
+  catalogue: {
+    id: "/images/catalogue/catalogue-id.pdf",
+    en: "/images/catalogue/catalogue-en.pdf",
+  } as Record<string, string>,
+  catalogueFor: (locale: string) =>
+    (locale === "en"
+      ? "/images/catalogue/catalogue-en.pdf"
+      : "/images/catalogue/catalogue-id.pdf"),
 };
 
 export const nav = [
