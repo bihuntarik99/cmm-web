@@ -244,26 +244,50 @@ export function ProductDetail({ product }: { product: Product }) {
               </a>
             </div>
 
+            {/* ===== SERVING ===== */}
+            {(isEn ? product.servingEn : product.serving) && (
+              <div className="mt-8 flex items-center justify-center gap-3 rounded-2xl border border-brand-pink/15 bg-brand-creamlight/70 px-4 py-4">
+                <span className="text-[10px] font-semibold uppercase tracking-widest text-brand-browndark/50">
+                  {isEn ? "Serving" : "Penyajian"}
+                </span>
+                <span className="text-sm font-bold text-brand-browndark">
+                  {isEn ? product.servingEn : product.serving}
+                </span>
+              </div>
+            )}
+
             {/* ===== BREWING GUIDE ===== */}
             {product.brewing && (
               <div className="mt-8 grid grid-cols-3 divide-x divide-brand-pink/15 rounded-2xl border border-brand-pink/15 bg-brand-creamlight/70">
                 {(() => {
                   const brewStr = (isEn ? product.brewingEn : product.brewing) || "";
-                  const [temp, time, ratio] = brewStr
+                  const parts = brewStr
                     .split("·")
-                    .map((s) => s.trim());
-                  const labels = isEn
-                    ? ["Water Temp", "Steep Time", "Ratio"]
-                    : ["Suhu Air", "Waktu Seduh", "Takaran"];
-                  const values = [temp, time, ratio];
-                  return labels.map((label, i) => (
-                    <div key={label} className="flex flex-col items-center gap-1 px-2 py-4 text-center">
+                    .map((s) => s.trim())
+                    .filter(Boolean);
+                  // Format teh: "temp · time · ratio" (3 bagian)
+                  if (parts.length >= 3) {
+                    const labels = isEn
+                      ? ["Water Temp", "Steep Time", "Ratio"]
+                      : ["Suhu Air", "Waktu Seduh", "Takaran"];
+                    return labels.map((label, i) => (
+                      <div key={label} className="flex flex-col items-center gap-1 px-2 py-4 text-center">
+                        <span className="text-[10px] font-semibold uppercase tracking-widest text-brand-browndark/50">
+                          {label}
+                        </span>
+                        <span className="text-sm font-bold text-brand-browndark">{parts[i]}</span>
+                      </div>
+                    ));
+                  }
+                  // Format kopi / lain: tampilkan sebagai satu info
+                  return (
+                    <div className="col-span-3 flex flex-col items-center gap-1 px-2 py-4 text-center">
                       <span className="text-[10px] font-semibold uppercase tracking-widest text-brand-browndark/50">
-                        {label}
+                        {isEn ? "Brewing Info" : "Info Penyeduhan"}
                       </span>
-                      <span className="text-sm font-bold text-brand-browndark">{values[i]}</span>
+                      <span className="text-sm font-bold text-brand-browndark">{brewStr}</span>
                     </div>
-                  ));
+                  );
                 })()}
               </div>
             )}

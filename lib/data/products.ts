@@ -23,6 +23,9 @@ export type Product = {
   ingredientsEn?: string;
   brewing?: string;
   brewingEn?: string;
+  /** Cara penyajian, mis. "Hot & Cold" */
+  serving?: string;
+  servingEn?: string;
   /** Info variant, mis. "1 kaleng isi 6 tea bags" */
   variantInfo?: Partial<Record<"Kaleng" | "Sachet" | "Drip Bag", string>>;
   formats?: ("Kaleng" | "Sachet" | "Drip Bag")[];
@@ -69,8 +72,8 @@ export const categoryMeta: Record<
     label: "Kopi",
     labelEn: "Coffee",
     href: "/produk/kopi",
-    sub: "Arindama, Askala — Drip Bag",
-    subEn: "Arindama, Askala — Drip Bag",
+    sub: "Arindama — Drip Bag",
+    subEn: "Arindama — Drip Bag",
   },
   "cold-brew": {
     label: "Cold Brew",
@@ -242,46 +245,27 @@ export const products: Product[] = [
     slug: "arindama",
     name: "Arindama",
     category: "kopi",
-    short: "Drip bag coffee — Arabika & Vanilla Planifolia, halus & smooth.",
-    shortEn: "Drip bag coffee — Arabica & Vanilla Planifolia, smooth & mellow.",
+    short: "Kopi Arabika & vanilla alami untuk momen santai Anda.",
+    shortEn: "Arabica Coffee with Natural Vanilla for Your Relaxing Moments.",
     description:
-      "Kopi Arabika pilihan dipadukan dengan keharuman alami Vanilla Planifolia, menghasilkan profil rasa yang halus dengan aroma yang lembut. Perpaduan ini menciptakan secangkir kopi dengan cita rasa yang seimbang, smooth, dan meninggalkan sentuhan manis yang lembut di akhir tegukan.",
+      "Cita rasa lembut kopi arabika dan vanilla alami, menghadirkan body yang smooth dan aftertaste yang manis. Aroma floral dan manisnya menciptakan pengalaman minum yang menenangkan, sempurna untuk menemani momen relaksasi Anda.",
     descriptionEn:
-      "Selected Arabica coffee combined with the natural fragrance of Vanilla Planifolia, producing a smooth flavor profile with a gentle aroma. This blend creates a cup of coffee with a balanced, smooth taste, leaving a soft sweet touch at the finish.",
-    tastingNotes: ["Halus & Smooth", "Aroma Vanilla", "Sentuhan Manis Lembut"],
-    tastingNotesEn: ["Smooth & Mellow", "Vanilla Aroma", "Soft Sweet Touch"],
-    ingredients: "Kopi Arabika, Vanilla Planifolia",
-    ingredientsEn: "Arabica Coffee, Vanilla Planifolia",
-    brewing: "Drip Bag · Air 90–92°C · 150–180ml · 1 drip bag",
-    brewingEn: "Drip Bag · Water 90–92°C · 150–180ml · 1 drip bag",
+      "A mellow taste of arabica coffee and natural vanilla, delivering smooth body and sweet aftertaste. Its floral and sweet aroma create a calming drinking experience, perfect to accompany your relaxing moments.",
+    tastingNotes: ["Lembut", "Manis", "Floral"],
+    tastingNotesEn: ["Mellow", "Sweet", "Floral"],
+    ingredients: "Biji Kopi, Vanilla",
+    ingredientsEn: "Coffee bean, Vanilla",
+    serving: "Hot & Cold",
+    servingEn: "Hot & Cold",
+    variantInfo: { "Drip Bag": "1 box contains 10 drip bags" },
+    brewing: "Drip Bag · 1 box isi 10 drip bags",
+    brewingEn: "Drip Bag · 1 box contains 10 drip bags",
     formats: ["Drip Bag"],
-    priceByFormat: { "Drip Bag": 75000 },
+    priceByFormat: { "Drip Bag": 45000 },
     images: ["/images/coffee/kopi-arindama.jpg"],
-    price: "Rp 75.000",
+    price: "Rp 45.000",
     featured: true,
     order: 5,
-  },
-  {
-    slug: "askala",
-    name: "Askala",
-    category: "kopi",
-    short: "Drip bag coffee — Arabika, Jahe, Kayu Manis & Cengkeh.",
-    shortEn: "Drip bag coffee — Arabica, Ginger, Cinnamon & Clove.",
-    description:
-      "Memadukan karakter kopi Arabika yang kaya dengan kehangatan jahe, kayu manis, dan cengkeh. Menghasilkan secangkir kopi yang beraroma rempah, berkarakter, dan seimbang, dengan sensasi hangat yang lembut serta aftertaste rempah yang khas.",
-    descriptionEn:
-      "Combines the rich character of Arabica coffee with the warmth of ginger, cinnamon, and clove. Produces a cup of coffee that is spice-aromatic, characterful, and balanced, with a gentle warm sensation and a distinctive spice aftertaste.",
-    tastingNotes: ["Rempah Berkarakter", "Hangat Jahe", "Aftertaste Cengkeh"],
-    tastingNotesEn: ["Characterful Spices", "Warm Ginger", "Clove Aftertaste"],
-    ingredients: "Kopi Arabika, Jahe, Kayu Manis, Cengkeh",
-    ingredientsEn: "Arabica Coffee, Ginger, Cinnamon, Clove",
-    brewing: "Drip Bag · Air 90–92°C · 150–180ml · 1 drip bag",
-    brewingEn: "Drip Bag · Water 90–92°C · 150–180ml · 1 drip bag",
-    formats: ["Drip Bag"],
-    priceByFormat: { "Drip Bag": 75000 },
-    images: ["/images/coffee/kopi-arindama.jpg"],
-    price: "Rp 75.000",
-    order: 6,
   },
 
   // ==================== COLD BREW ====================
