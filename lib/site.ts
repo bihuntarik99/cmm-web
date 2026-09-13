@@ -17,13 +17,13 @@ export const site = {
   tiktok: "https://tiktok.com/@ceritameramuda",
   // Katalog (per bahasa)
   catalogue: {
-    id: "/images/catalogue/catalogue-id.pdf",
-    en: "/images/catalogue/catalogue-en.pdf",
+    id: "/images/catalogue/ID-Cerita-Meramuda-E-Catalogue.pdf",
+    en: "/images/catalogue/EN-Cerita-Meramuda-E-Catalogue.pdf",
   } as Record<string, string>,
   catalogueFor: (locale: string) =>
     (locale === "en"
-      ? "/images/catalogue/catalogue-en.pdf"
-      : "/images/catalogue/catalogue-id.pdf"),
+      ? "/images/catalogue/EN-Cerita-Meramuda-E-Catalogue.pdf"
+      : "/images/catalogue/ID-Cerita-Meramuda-E-Catalogue.pdf"),
 };
 
 export const nav = [
