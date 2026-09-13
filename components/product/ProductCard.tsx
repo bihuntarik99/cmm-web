@@ -84,7 +84,7 @@ export function ProductCard({ product }: { product: Product }) {
         <Link href={hrefFor(product, locale)}>
           <h3 className="font-serif text-xl text-brand-browndark">{product.name}</h3>
         </Link>
-        <p className="mt-1 text-sm text-brand-browndark/70">{locale === "en" ? product.shortEn : product.short}</p>
+        <p className="mt-1 min-h-[2.5rem] text-sm text-brand-browndark/70">{locale === "en" ? product.shortEn : product.short}</p>
         {currentPrice > 0 && (
           <p className="mt-2 text-sm font-medium text-brand-pink">
             {formatRupiah(currentPrice)}
@@ -116,8 +116,8 @@ export function ProductCard({ product }: { product: Product }) {
           </div>
         )}
 
-        {/* Action buttons */}
-        <div className="mt-4 flex items-center gap-2">
+        {/* Action buttons — mt-auto agar selalu rata bawah */}
+        <div className="mt-auto flex items-center gap-2 pt-4">
           <button
             onClick={handleAdd}
             className="btn-primary flex-1 py-2 text-xs"
