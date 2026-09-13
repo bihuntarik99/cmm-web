@@ -4,6 +4,7 @@ import { getByCategory, products, hampers } from "@/lib/data/products";
 import { ProductCard } from "@/components/product/ProductCard";
 import { Hero } from "@/components/home/Hero";
 import { VerticalVideo } from "@/components/home/VerticalVideo";
+import { HampersCarousel } from "@/components/home/HampersCarousel";
 import { ScrollReveal } from "@/components/common/ScrollReveal";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
@@ -108,36 +109,7 @@ export default function Home() {
             </div>
           </ScrollReveal>
           <ScrollReveal delay={1}>
-            <div className="flex gap-5 overflow-x-auto pb-4 snap-x snap-mandatory -mx-4 px-4 sm:mx-0 sm:px-0">
-              {hampers.map((h) => (
-                <Link
-                  key={h.slug}
-                  href={p(`/hampers/${h.slug}`)}
-                  className="group flex-shrink-0 w-64 snap-center overflow-hidden rounded-2xl border border-brand-pink/10 bg-white/60 transition hover:shadow-soft"
-                >
-                  <div className="aspect-square overflow-hidden bg-[#F4EEE2]">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={h.image}
-                      alt={locale === "en" ? h.nameEn : h.name}
-                      className="h-full w-full object-contain transition duration-500 group-hover:scale-105"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div className="p-4">
-                    <h3 className="font-serif text-lg text-brand-browndark">
-                      {locale === "en" ? h.nameEn : h.name}
-                    </h3>
-                    {h.price && (
-                      <p className="mt-1 text-sm font-medium text-brand-pink">{h.price}</p>
-                    )}
-                    <span className="mt-2 inline-block text-sm text-brand-pink link-underline">
-                      {t("lihat")} →
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
+            <HampersCarousel items={hampers} pathPrefix={p} />
           </ScrollReveal>
         </div>
       </section>
