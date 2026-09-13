@@ -107,7 +107,7 @@ export const products: Product[] = [
     images: [
       "/images/tea/ayurvana-kaleng.webp",
       "/images/tea/ayurvana-sachet.webp",
-      "/images/tea/ayurvana-komposisi.webp",
+      "/images/tea/ayurvana-sqbc.png",
     ],
     infoImageId: "/images/tea/ayurvana-sqbc.png",
     infoImageEn: "/images/tea/ayurvana-sqbc.png",
@@ -138,7 +138,7 @@ export const products: Product[] = [
     images: [
       "/images/tea/asmaranala-kaleng.webp",
       "/images/tea/asmaranala-sachet.webp",
-      "/images/tea/asmaranala-komposisi.webp",
+      "/images/tea/asmaranala-sqbc.png",
     ],
     infoImageId: "/images/tea/asmaranala-sqbc.png",
     infoImageEn: "/images/tea/asmaranala-sqbc.png",
@@ -171,7 +171,7 @@ export const products: Product[] = [
     images: [
       "/images/tea/amondini-kaleng.webp",
       "/images/tea/amondini-sachet.webp",
-      "/images/tea/amondini-komposisi.webp",
+      "/images/tea/amondini-sqbc.png",
     ],
     infoImageId: "/images/tea/amondini-sqbc.png",
     infoImageEn: "/images/tea/amondini-sqbc.png",
@@ -202,7 +202,7 @@ export const products: Product[] = [
     images: [
       "/images/tea/arunika-kaleng.webp",
       "/images/tea/arunika-sachet.webp",
-      "/images/tea/arunika-komposisi.webp",
+      "/images/tea/arunika-sqbc.png",
     ],
     infoImageId: "/images/tea/arunika-sqbc.png",
     infoImageEn: "/images/tea/arunika-sqbc.png",
