@@ -5,9 +5,10 @@ import { useState, useEffect } from "react";
 import { useLocale, useTranslations } from "next-intl";
 
 const slides = [
-  "/images/hero/slider-1.png",
-  "/images/hero/slider-2.png",
-  "/images/hero/slider-3.png",
+  { desktop: "/images/hero/slider/SLIDE A DESKTOP.png", tablet: "/images/hero/slider/SLIDE A TABLET.png", mobile: "/images/hero/slider/SLIDE A MOBILE.png" },
+  { desktop: "/images/hero/slider/SLIDE B DESKTOP.png", tablet: "/images/hero/slider/SLIDE B TABLET.png", mobile: "/images/hero/slider/SLIDE B MOBILE.png" },
+  { desktop: "/images/hero/slider/SLIDE C DESKTOP.png", tablet: "/images/hero/slider/SLIDE C TABLET.png", mobile: "/images/hero/slider/SLIDE C MOBILE.png" },
+  { desktop: "/images/hero/slider/SLIDE D DESKTOP.png", tablet: "/images/hero/slider/SLIDE D TABLET.png", mobile: "/images/hero/slider/SLIDE D MOBILE.png" },
 ];
 
 export function Hero() {
@@ -15,19 +16,33 @@ export function Hero() {
   const t = useTranslations("hero");
   const p = (path: string) => `/${locale}${path}`;
   const [current, setCurrent] = useState(0);
+  const [viewport, setViewport] = useState<"mobile" | "tablet" | "desktop">("desktop");
+
+  useEffect(() => {
+    const checkViewport = () => {
+      const w = window.innerWidth;
+      setViewport(w < 640 ? "mobile" : w < 1024 ? "tablet" : "desktop");
+    };
+    checkViewport();
+    window.addEventListener("resize", checkViewport);
+    return () => window.removeEventListener("resize", checkViewport);
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrent((c) => (c + 1) % slides.length);
-    }, 4000);
+    }, 5000);
     return () => clearInterval(timer);
   }, []);
+
+  const getImage = (slide: typeof slides[0]) =>
+    viewport === "mobile" ? slide.mobile : viewport === "tablet" ? slide.tablet : slide.desktop;
 
   return (
     <section className="relative w-full overflow-hidden bg-brand-browndark">
       <div className="relative h-[60vh] min-h-[420px] max-h-[640px] w-full">
         {/* Slider images */}
-        {slides.map((src, i) => (
+        {slides.map((slide, i) => (
           <div
             key={i}
             className={`absolute inset-0 transition-opacity duration-1000 ${
@@ -36,7 +51,7 @@ export function Hero() {
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={src}
+              src={getImage(slide)}
               alt={`Cerita Meramuda ${i + 1}`}
               className="h-full w-full object-cover object-center"
             />
