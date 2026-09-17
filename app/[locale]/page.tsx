@@ -63,6 +63,9 @@ export default function Home() {
             <p className="mt-4 max-w-md text-brand-browndark/70">
               {t("lifestyleDesc")}
             </p>
+            <p className="mt-3 font-accent text-lg italic text-brand-pink">
+              {t("lifestyleSubline")}
+            </p>
             <Link href={p("/about")} className="btn-outline mt-6 w-fit">
               {t("ceritaKami")}
             </Link>
