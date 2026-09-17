@@ -1,8 +1,8 @@
 export const site = {
   name: "Cerita Meramuda",
   shortName: "CMM",
-  tagline: "Kisah Rasa dari Kebun ke Cangkirmu",
-  taglineEn: "A Tale of Flavor from Garden to Cup",
+  tagline: "Crafted by Nature, Refined by Hand",
+  taglineEn: "Crafted by Nature, Refined by Hand",
   whatsapp: "6285718509797",
   email: "hello@ceritameramuda.id",
   phoneDisplay: "0857 1850 9797",
@@ -10,11 +10,11 @@ export const site = {
   hours: "Senin – Jumat · 09.00 – 17.00",
   hoursEn: "Monday – Friday · 09.00 – 17.00",
   // E-commerce
-  shopee: "https://shopee.co.id/ceritameramuda",
-  tiktokShop: "https://shop.tiktok.com/@ceritameramuda",
+  shopee: "https://id.shp.ee/sMaRc4pS",
+  tiktokShop: "https://www.tiktok.com/@ceritameramuda?_r=1&_t=ZS-99ilUOUrsjU",
   // Sosial media
   instagram: "https://instagram.com/ceritameramuda",
-  tiktok: "https://tiktok.com/@ceritameramuda",
+  tiktok: "https://www.tiktok.com/@ceritameramudadai?_r=1&_t=ZS-99ilb3gIUg1",
   // Katalog (per bahasa)
   catalogue: {
     id: "/images/catalogue/ID-Cerita-Meramuda-E-Catalogue.pdf",
@@ -28,7 +28,7 @@ export const site = {
 
 export const nav = [
   { label: "Produk", href: "/produk", hasDropdown: true },
-  { label: "Hampers", href: "/hampers" },
+  { label: "Hampers", href: "/hampers", labelEn: "Hampers and Gift" },
   { label: "Tentang", href: "/about" },
   { label: "Wholesale", href: "/wholesale" },
   { label: "Kontak", href: "/contact" },
