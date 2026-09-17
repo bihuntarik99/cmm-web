@@ -261,9 +261,9 @@ export const products: Product[] = [
     brewing: "Drip Bag · 1 box isi 10 drip bags",
     brewingEn: "Drip Bag · 1 box contains 10 drip bags",
     formats: ["Drip Bag"],
-    priceByFormat: { "Drip Bag": 45000 },
-    images: ["/images/coffee/kopi-arindama.jpg"],
-    price: "Rp 45.000",
+    priceByFormat: { "Drip Bag": 22000 },
+    images: ["/images/coffee/arindama-coffee.png"],
+    price: "Rp 22.000",
     featured: true,
     order: 5,
   },
@@ -283,7 +283,7 @@ export const products: Product[] = [
     ingredients: "Teh Hijau, Daun Mint, Lemon, Kayu Manis, Bunga Melati",
     ingredientsEn: "Green Tea, Mint Leaves, Lemon, Cinnamon, Jasmine Flowers",
         images: ["/images/cold-drinks/cb-ayurvana.webp"],
-    price: "Rp 35.000",
+    price: "Rp 25.000",
     order: 7,
   },
   {
@@ -300,7 +300,7 @@ export const products: Product[] = [
     ingredients: "Daun Sereh, Kapulaga, Bunga Lawang, Goji Berry, Buah Naga",
     ingredientsEn: "Lemongrass, Cardamom, Star Anise, Goji Berry, Dragon Fruit",
         images: ["/images/cold-drinks/cb-amondini.webp"],
-    price: "Rp 35.000",
+    price: "Rp 25.000",
     order: 8,
   },
   {
@@ -317,7 +317,7 @@ export const products: Product[] = [
     ingredients: "Daun Sereh, Bunga Chamomile, Kayu Manis",
     ingredientsEn: "Lemongrass, Chamomile Flowers, Cinnamon",
         images: ["/images/cold-drinks/cb-arunika.webp"],
-    price: "Rp 35.000",
+    price: "Rp 25.000",
     order: 9,
   },
   {
@@ -334,7 +334,7 @@ export const products: Product[] = [
     ingredients: "Teh Hitam, Bunga Lavender, Bunga Melati, Bunga Forget-Me-Not",
     ingredientsEn: "Black Tea, Lavender Flowers, Jasmine Flowers, Forget-Me-Not Flowers",
         images: ["/images/cold-drinks/cb-asmaranala.webp"],
-    price: "Rp 35.000",
+    price: "Rp 25.000",
     order: 10,
   },
 
